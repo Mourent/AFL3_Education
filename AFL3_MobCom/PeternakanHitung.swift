@@ -17,6 +17,7 @@ struct PeternakanHitung: View {
     @State private var angka: Int = Int.random(in: 1...5)
     @State private var sheepInBasket: Int = 0
     @State private var showingBenar: Bool = false
+    @State private var showingSalah: Bool = false
     @State private var goHitungApel: Bool = false
     
     var body: some View {
@@ -41,20 +42,8 @@ struct PeternakanHitung: View {
                     showingBenar = true
                 }
                 else {
-                    
+                    showingSalah = true
                 }
-            }
-            .alert(isPresented: $showingBenar) {
-                Alert(
-                    title: Text("Jawaban Benar"),
-                    message: Text("Selamat! Jawaban Anda benar."),
-                    dismissButton: .default(
-                        Text("OK"),
-                        action: {
-                            goHitungApel = true
-                        }
-                    )
-                )
             }
             .padding()
             .background(Color(UIColor(red: 0x70/255.0, green: 0x9F/255.0, blue: 0x19/255.0, alpha: 1.0)))
@@ -172,6 +161,64 @@ struct PeternakanHitung: View {
                             lastSheepPosition[4] = sheepOffset[4]
                         }
                 )
+            
+            if showingBenar {
+                ZStack{
+                    Image("board")
+                        .resizable()
+                        .scaledToFit()
+                        .scaleEffect(0.5)
+                    
+                Button {
+                    goHitungApel = true
+                } label: {
+                    Image("next")
+                        .resizable()
+                        .scaledToFit()
+                        .scaleEffect(0.25)
+                }
+                .position(CGPoint(x: widthLayar * 0.51, y: heightLayar * 0.57))
+                    
+                Text("Next")
+                    .foregroundColor(.black)
+                    .font(.custom("PaytoneOne-Regular", size: 50))
+                    .position(CGPoint(x: widthLayar * 0.5, y: heightLayar * 0.42))
+                Text("Correct")
+                    .foregroundColor(.white)
+                    .font(.custom("PaytoneOne-Regular", size: 50))
+                    .position(CGPoint(x: widthLayar * 0.50, y: heightLayar * 0.275))
+                }
+            }
+            if showingSalah {
+                ZStack{
+                    Image("board")
+                        .resizable()
+                        .scaledToFit()
+                        .scaleEffect(0.5)
+                    
+                Button {
+                    reset()
+                    showingSalah = false
+                } label: {
+                    Image("tryagain")
+                        .resizable()
+                        .scaledToFit()
+                        .scaleEffect(0.2)
+                }
+                .position(CGPoint(x: widthLayar * 0.51, y: heightLayar * 0.57))
+                    
+                Text("Try Again")
+                    .foregroundColor(.black)
+                    .font(.custom("PaytoneOne-Regular", size: 50))
+                    .position(CGPoint(x: widthLayar * 0.51, y: heightLayar * 0.42))
+                Text("Wrong")
+                    .foregroundColor(.white)
+                    .font(.custom("PaytoneOne-Regular", size: 50))
+                    .position(CGPoint(x: widthLayar * 0.503, y: heightLayar * 0.275))
+                    
+                }
+            }
+
         }
         if goHitungApel {
             ContentView()
@@ -192,6 +239,11 @@ struct PeternakanHitung: View {
                 print("Kambing \(index + 1) masuk ke keranjang!")
             }
         }
+    }
+    func reset(){
+        angka = Int.random(in: 1...5)
+        sheepOffset = Array(repeating: .zero, count: 7)
+        lastSheepPosition = Array(repeating: .zero, count: 7)
     }
 }
 

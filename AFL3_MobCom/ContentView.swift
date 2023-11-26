@@ -17,6 +17,7 @@ struct ContentView: View {
     @State private var angka: Int = Int.random(in: 1...7)
     @State private var applesInBasket: Int = 0
     @State private var showingBenar: Bool = false
+    @State private var showingSalah: Bool = false
     @State private var isPeternakanHitungActive = false
     
     var body: some View {
@@ -29,7 +30,7 @@ struct ContentView: View {
             Image("tree")
             
             Image("cewe")
-                .position(CGPoint(x: (widthLayar * 0.829), y: heightLayar * 0.695))
+                .position(CGPoint(x: (widthLayar * 0.835), y: heightLayar * 0.695))
             
             Image("basket")
                 .position(CGPoint(x: widthLayar * 0.711, y: heightLayar * 0.815))
@@ -40,20 +41,8 @@ struct ContentView: View {
                     showingBenar = true
                 }
                 else {
-                    
+                    showingSalah = true
                 }
-            }
-            .alert(isPresented: $showingBenar) {
-                Alert(
-                    title: Text("Jawaban Benar"),
-                    message: Text("Selamat! Jawaban Anda benar."),
-                    dismissButton: .default(
-                        Text("OK"),
-                        action: {
-                            isPeternakanHitungActive = true
-                        }
-                    )
-                )
             }
             .padding()
             .background(Color(UIColor(red: 0x70/255.0, green: 0x9F/255.0, blue: 0x19/255.0, alpha: 1.0)))
@@ -180,6 +169,63 @@ struct ContentView: View {
                             lastApplePosition[6] = appleOffset[6]
                         }
                 )
+            
+            if showingBenar {
+                ZStack{
+                    Image("board")
+                        .resizable()
+                        .scaledToFit()
+                        .scaleEffect(0.5)
+                    
+                Button {
+                    isPeternakanHitungActive = true
+                } label: {
+                    Image("next")
+                        .resizable()
+                        .scaledToFit()
+                        .scaleEffect(0.25)
+                }
+                .position(CGPoint(x: widthLayar * 0.51, y: heightLayar * 0.57))
+                    
+                Text("Next")
+                    .foregroundColor(.black)
+                    .font(.custom("PaytoneOne-Regular", size: 50))
+                    .position(CGPoint(x: widthLayar * 0.5, y: heightLayar * 0.42))
+                Text("Correct")
+                    .foregroundColor(.white)
+                    .font(.custom("PaytoneOne-Regular", size: 50))
+                    .position(CGPoint(x: widthLayar * 0.50, y: heightLayar * 0.275))
+                }
+            }
+            if showingSalah {
+                ZStack{
+                    Image("board")
+                        .resizable()
+                        .scaledToFit()
+                        .scaleEffect(0.5)
+                    
+                Button {
+                    reset()
+                    showingSalah = false
+                } label: {
+                    Image("tryagain")
+                        .resizable()
+                        .scaledToFit()
+                        .scaleEffect(0.2)
+                }
+                .position(CGPoint(x: widthLayar * 0.51, y: heightLayar * 0.57))
+                    
+                Text("Try Again")
+                    .foregroundColor(.black)
+                    .font(.custom("PaytoneOne-Regular", size: 50))
+                    .position(CGPoint(x: widthLayar * 0.51, y: heightLayar * 0.42))
+                Text("Wrong")
+                    .foregroundColor(.white)
+                    .font(.custom("PaytoneOne-Regular", size: 50))
+                    .position(CGPoint(x: widthLayar * 0.503, y: heightLayar * 0.275))
+                    
+                }
+            }
         }
         if isPeternakanHitungActive {
             PeternakanHitung()
@@ -202,11 +248,10 @@ struct ContentView: View {
         }
     }
     func reset(){
-        angka = Int.random(in: 1...7)  
-        lastApplePosition = Array(repeating: .zero, count: 7)
+        angka = Int.random(in: 1...7)
         appleOffset = Array(repeating: .zero, count: 7)
+        lastApplePosition = Array(repeating: .zero, count: 7)
     }
-
 }
 
 #Preview {
