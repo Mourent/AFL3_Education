@@ -15,6 +15,7 @@
 		04F563C22B0DC5E30081ED40 /* AFL3_MobComUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F563C12B0DC5E30081ED40 /* AFL3_MobComUITests.swift */; };
 		04F563C42B0DC5E30081ED40 /* AFL3_MobComUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F563C32B0DC5E30081ED40 /* AFL3_MobComUITestsLaunchTests.swift */; };
 		04F563D12B12E78B0081ED40 /* PaytoneOne-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 04F563D02B12E78B0081ED40 /* PaytoneOne-Regular.ttf */; };
+		04F563D42B12EB320081ED40 /* PeternakanHitung.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F563D32B12EB320081ED40 /* PeternakanHitung.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,7 @@
 		04F563C32B0DC5E30081ED40 /* AFL3_MobComUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AFL3_MobComUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		04F563D02B12E78B0081ED40 /* PaytoneOne-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PaytoneOne-Regular.ttf"; sourceTree = "<group>"; };
 		04F563D22B12E7B40081ED40 /* AFL3-MobCom-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "AFL3-MobCom-Info.plist"; sourceTree = SOURCE_ROOT; };
+		04F563D32B12EB320081ED40 /* PeternakanHitung.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeternakanHitung.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +102,7 @@
 			children = (
 				04F563D22B12E7B40081ED40 /* AFL3-MobCom-Info.plist */,
 				04F563A62B0DC5E10081ED40 /* AFL3_MobComApp.swift */,
+				04F563D32B12EB320081ED40 /* PeternakanHitung.swift */,
 				04F563A82B0DC5E10081ED40 /* ContentView.swift */,
 				04F563AA2B0DC5E30081ED40 /* Assets.xcassets */,
 				04F563AC2B0DC5E30081ED40 /* Preview Content */,
@@ -263,6 +266,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04F563D42B12EB320081ED40 /* PeternakanHitung.swift in Sources */,
 				04F563A92B0DC5E10081ED40 /* ContentView.swift in Sources */,
 				04F563A72B0DC5E10081ED40 /* AFL3_MobComApp.swift in Sources */,
 			);

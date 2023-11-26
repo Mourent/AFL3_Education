@@ -17,6 +17,7 @@ struct ContentView: View {
     @State private var angka: Int = Int.random(in: 1...7)
     @State private var applesInBasket: Int = 0
     @State private var showingBenar: Bool = false
+    @State private var isPeternakanHitungActive = false
     
     var body: some View {
         ZStack {
@@ -49,7 +50,7 @@ struct ContentView: View {
                     dismissButton: .default(
                         Text("OK"),
                         action: {
-                            reset()
+                            isPeternakanHitungActive = true
                         }
                     )
                 )
@@ -179,6 +180,10 @@ struct ContentView: View {
                             lastApplePosition[6] = appleOffset[6]
                         }
                 )
+        }
+        if isPeternakanHitungActive {
+            PeternakanHitung()
+            ContentView().hidden()
         }
     }
     func cekApple(){
