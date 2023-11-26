@@ -10,8 +10,10 @@ import SwiftUI
 struct ContentView: View {
     @State private var lastApplePosition: [CGSize] = Array(repeating: .zero, count: 7)
     @State private var appleOffset: [CGSize] = Array(repeating: .zero, count: 7)
-    @State private var dataXAwal: [Int] = [450, 650, 550, 700, 760, 590, 470]
-    @State private var dataYAwal: [Int] = [300, 200, 250, 310, 400, 370, 450]
+    @State private var heightLayar = UIScreen.main.bounds.height
+    @State private var widthLayar = UIScreen.main.bounds.width
+    @State private var dataXAwal: [Int] = []
+    @State private var dataYAwal: [Int] = []
     @State private var angka: Int = Int.random(in: 1...7)
     @State private var applesInBasket: Int = 0
     @State private var showingBenar: Bool = false
@@ -26,12 +28,12 @@ struct ContentView: View {
             Image("tree")
             
             Image("cewe")
-                .position(CGPoint(x: 990, y: 580))
+                .position(CGPoint(x: (widthLayar * 0.829), y: heightLayar * 0.695))
             
             Image("basket")
-                .position(CGPoint(x: 850, y: 680))
+                .position(CGPoint(x: widthLayar * 0.711, y: heightLayar * 0.815))
             
-            Button("Submit") {
+            Button("SUBMIT") {
                 cekApple()
                 if (applesInBasket == angka){
                     showingBenar = true
@@ -53,26 +55,27 @@ struct ContentView: View {
                 )
             }
             .padding()
-            .background(Color.blue)
+            .background(Color(UIColor(red: 0x70/255.0, green: 0x9F/255.0, blue: 0x19/255.0, alpha: 1.0)))
+            .shadow(radius: 50)
             .foregroundColor(.white)
+            .font(.custom("PaytoneOne-Regular", size: 24))
             .cornerRadius(10)
-            .position(x: 850, y: 790)
-            
+            .position(x: widthLayar * 0.532, y: heightLayar * 0.915)
             
             ZStack{
                 Image("awan")
-                    .position(CGPoint(x: 890, y: 350))
+                    .position(CGPoint(x: widthLayar * 0.745, y: heightLayar * 0.420))
                 Image("apple")
-                    .position(CGPoint(x: 905, y: 335))
+                    .position(CGPoint(x: widthLayar * 0.758, y: heightLayar * 0.401))
                 Text("\(angka)")
                     .font(.system(size: 55, weight: .bold))
                     .foregroundColor(.red)
-                    .position(CGPoint(x: 857, y: 337))
+                    .position(CGPoint(x: widthLayar * 0.718, y: heightLayar * 0.404))
                     .border(Color.black)
             }
             
             Image("apple")
-                .position(CGPoint(x: 450, y: 300))
+                .position(CGPoint(x: widthLayar * 0.377, y: heightLayar * 0.360))
                 .offset(appleOffset[0])
                 .gesture(
                     DragGesture()
@@ -87,7 +90,7 @@ struct ContentView: View {
                         }
                 )
             Image("apple")
-                .position(CGPoint(x: 650, y: 200))
+                .position(CGPoint(x: widthLayar * 0.544, y: heightLayar * 0.240))
                 .offset(appleOffset[1])
                 .gesture(
                     DragGesture()
@@ -102,7 +105,7 @@ struct ContentView: View {
                         }
                 )
             Image("apple")
-                .position(CGPoint(x: 550, y: 250))
+                .position(CGPoint(x: widthLayar * 0.461, y: heightLayar * 0.300))
                 .offset(appleOffset[2])
                 .gesture(
                     DragGesture()
@@ -117,7 +120,7 @@ struct ContentView: View {
                         }
                 )
             Image("apple")
-                .position(CGPoint(x: 700, y: 310))
+                .position(CGPoint(x: widthLayar * 0.586, y: heightLayar * 0.372))
                 .offset(appleOffset[3])
                 .gesture(
                     DragGesture()
@@ -132,7 +135,7 @@ struct ContentView: View {
                         }
                 )
             Image("apple")
-                .position(CGPoint(x: 760, y: 400))
+                .position(CGPoint(x: widthLayar * 0.637, y: heightLayar * 0.480))
                 .offset(appleOffset[4])
                 .gesture(
                     DragGesture()
@@ -147,7 +150,7 @@ struct ContentView: View {
                         }
                 )
             Image("apple")
-                .position(CGPoint(x: 590, y: 370))
+                .position(CGPoint(x: widthLayar * 0.494, y: heightLayar * 0.444))
                 .offset(appleOffset[5])
                 .gesture(
                     DragGesture()
@@ -162,7 +165,7 @@ struct ContentView: View {
                         }
                 )
             Image("apple")
-                .position(CGPoint(x: 470, y: 450))
+                .position(CGPoint(x: widthLayar * 0.394, y: heightLayar * 0.540))
                 .offset(appleOffset[6])
                 .gesture(
                     DragGesture()
@@ -179,13 +182,15 @@ struct ContentView: View {
         }
     }
     func cekApple(){
+        dataXAwal += [(Int(widthLayar * 0.377)), Int(widthLayar * 0.544), Int(widthLayar * 0.461), Int(widthLayar * 0.586), Int(widthLayar * 0.637), Int(widthLayar * 0.494), Int(widthLayar * 0.394)]
+        dataYAwal += [(Int(heightLayar * 0.360)), Int(heightLayar * 0.240), Int(heightLayar * 0.300), Int(heightLayar * 0.372), Int(heightLayar * 0.480), Int(heightLayar * 0.444), Int(heightLayar * 0.540)]
         applesInBasket = 0
         for index in 0..<7 {
             let lastAppleX = Int(lastApplePosition[index].width) + dataXAwal[index]
             let lastAppleY = Int(lastApplePosition[index].height) + dataYAwal[index]
             
             // Cek apakah posisi terakhir apel berada di dalam area keranjang
-            if (lastAppleX >= 800 && lastAppleX <= 900 && lastAppleY >= 630 && lastAppleY <= 730) {
+            if (lastAppleX >= Int(widthLayar * 0.670) && lastAppleX <= Int(widthLayar * 0.754) && lastAppleY >= Int(heightLayar * 0.755) && lastAppleY <= Int(heightLayar * 0.875)) {
                 applesInBasket += 1
                 print("Apel \(index + 1) masuk ke keranjang!")
             }

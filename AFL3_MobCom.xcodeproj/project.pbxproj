@@ -14,6 +14,7 @@
 		04F563B82B0DC5E30081ED40 /* AFL3_MobComTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F563B72B0DC5E30081ED40 /* AFL3_MobComTests.swift */; };
 		04F563C22B0DC5E30081ED40 /* AFL3_MobComUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F563C12B0DC5E30081ED40 /* AFL3_MobComUITests.swift */; };
 		04F563C42B0DC5E30081ED40 /* AFL3_MobComUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F563C32B0DC5E30081ED40 /* AFL3_MobComUITestsLaunchTests.swift */; };
+		04F563D12B12E78B0081ED40 /* PaytoneOne-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 04F563D02B12E78B0081ED40 /* PaytoneOne-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +45,8 @@
 		04F563BD2B0DC5E30081ED40 /* AFL3_MobComUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AFL3_MobComUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		04F563C12B0DC5E30081ED40 /* AFL3_MobComUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AFL3_MobComUITests.swift; sourceTree = "<group>"; };
 		04F563C32B0DC5E30081ED40 /* AFL3_MobComUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AFL3_MobComUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		04F563D02B12E78B0081ED40 /* PaytoneOne-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PaytoneOne-Regular.ttf"; sourceTree = "<group>"; };
+		04F563D22B12E7B40081ED40 /* AFL3-MobCom-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "AFL3-MobCom-Info.plist"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +77,7 @@
 		04F5639A2B0DC5E10081ED40 = {
 			isa = PBXGroup;
 			children = (
+				04F563D02B12E78B0081ED40 /* PaytoneOne-Regular.ttf */,
 				04F563A52B0DC5E10081ED40 /* AFL3_MobCom */,
 				04F563B62B0DC5E30081ED40 /* AFL3_MobComTests */,
 				04F563C02B0DC5E30081ED40 /* AFL3_MobComUITests */,
@@ -94,6 +98,7 @@
 		04F563A52B0DC5E10081ED40 /* AFL3_MobCom */ = {
 			isa = PBXGroup;
 			children = (
+				04F563D22B12E7B40081ED40 /* AFL3-MobCom-Info.plist */,
 				04F563A62B0DC5E10081ED40 /* AFL3_MobComApp.swift */,
 				04F563A82B0DC5E10081ED40 /* ContentView.swift */,
 				04F563AA2B0DC5E30081ED40 /* Assets.xcassets */,
@@ -231,6 +236,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04F563D12B12E78B0081ED40 /* PaytoneOne-Regular.ttf in Resources */,
 				04F563AE2B0DC5E30081ED40 /* Preview Assets.xcassets in Resources */,
 				04F563AB2B0DC5E30081ED40 /* Assets.xcassets in Resources */,
 			);
@@ -424,6 +430,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"AFL3_MobCom/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "AFL3-MobCom-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -451,6 +458,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"AFL3_MobCom/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "AFL3-MobCom-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
