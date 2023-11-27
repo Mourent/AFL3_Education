@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0458FC3C2B14D88200D5504A /* buah.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0458FC3B2B14D88200D5504A /* buah.swift */; };
+		0458FC3E2B14E24000D5504A /* START.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0458FC3D2B14E24000D5504A /* START.swift */; };
 		04F563A72B0DC5E10081ED40 /* AFL3_MobComApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F563A62B0DC5E10081ED40 /* AFL3_MobComApp.swift */; };
 		04F563A92B0DC5E10081ED40 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F563A82B0DC5E10081ED40 /* ContentView.swift */; };
 		04F563AB2B0DC5E30081ED40 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04F563AA2B0DC5E30081ED40 /* Assets.xcassets */; };
@@ -36,6 +38,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0458FC3B2B14D88200D5504A /* buah.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = buah.swift; sourceTree = "<group>"; };
+		0458FC3D2B14E24000D5504A /* START.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = START.swift; sourceTree = "<group>"; };
 		04F563A32B0DC5E10081ED40 /* AFL3_MobCom.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AFL3_MobCom.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04F563A62B0DC5E10081ED40 /* AFL3_MobComApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AFL3_MobComApp.swift; sourceTree = "<group>"; };
 		04F563A82B0DC5E10081ED40 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -104,6 +108,8 @@
 				04F563A62B0DC5E10081ED40 /* AFL3_MobComApp.swift */,
 				04F563D32B12EB320081ED40 /* PeternakanHitung.swift */,
 				04F563A82B0DC5E10081ED40 /* ContentView.swift */,
+				0458FC3B2B14D88200D5504A /* buah.swift */,
+				0458FC3D2B14E24000D5504A /* START.swift */,
 				04F563AA2B0DC5E30081ED40 /* Assets.xcassets */,
 				04F563AC2B0DC5E30081ED40 /* Preview Content */,
 			);
@@ -267,7 +273,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				04F563D42B12EB320081ED40 /* PeternakanHitung.swift in Sources */,
+				0458FC3C2B14D88200D5504A /* buah.swift in Sources */,
 				04F563A92B0DC5E10081ED40 /* ContentView.swift in Sources */,
+				0458FC3E2B14E24000D5504A /* START.swift in Sources */,
 				04F563A72B0DC5E10081ED40 /* AFL3_MobComApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
