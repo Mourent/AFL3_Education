@@ -273,11 +273,11 @@ struct buah: View {
         }
         if isPeternakanHitungActive {
             PeternakanHitung()
-            ContentView().hidden()
+            buah().hidden()
         }
         if isStartActive {
-            START()
-            ContentView().hidden()
+            ContentView()
+            buah().hidden()
         }
     }
     func cekApple(){

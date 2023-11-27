@@ -221,7 +221,7 @@ struct PeternakanHitung: View {
 
         }
         if goHitungApel {
-            ContentView()
+            BuahHitung()
             PeternakanHitung().hidden()
         }
     }
