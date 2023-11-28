@@ -277,6 +277,7 @@ struct BuahHitung: View {
         angka = Int.random(in: 1...7)
         appleOffset = Array(repeating: .zero, count: 7)
         lastApplePosition = Array(repeating: .zero, count: 7)
+        applesInBasket = 0
     }
 }
 

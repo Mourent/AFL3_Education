@@ -36,6 +36,18 @@ struct PeternakanHitung: View {
             Image("cowo")
                 .position(CGPoint(x: widthLayar * 0.400, y: heightLayar * 0.700))
             
+            Image("board")
+                .resizable()
+                .scaledToFit()
+                .scaleEffect(0.13)
+                .position(CGPoint(x: widthLayar * 0.22, y: heightLayar * 0.77))
+            
+            Text("\(sheepInBasket)")
+                .font(.system(size: 55, weight: .bold))
+                .foregroundColor(.red)
+                .position(CGPoint(x: widthLayar * 0.222, y: heightLayar * 0.775))
+                .border(Color.black)
+            
             Button("SUBMIT") {
                 cekSheep()
                 if (sheepInBasket == angka){
@@ -83,6 +95,8 @@ struct PeternakanHitung: View {
                         }
                         .onEnded { gesture in
                             lastSheepPosition[0] = sheepOffset[0]
+                            
+                            cekSheep()
                         }
                 )
             
@@ -102,6 +116,8 @@ struct PeternakanHitung: View {
                         }
                         .onEnded { gesture in
                             lastSheepPosition[1] = sheepOffset[1]
+                            
+                            cekSheep()
                         }
                 )
             
@@ -121,6 +137,8 @@ struct PeternakanHitung: View {
                         }
                         .onEnded { gesture in
                             lastSheepPosition[2] = sheepOffset[2]
+                            
+                            cekSheep()
                         }
                 )
             
@@ -140,6 +158,8 @@ struct PeternakanHitung: View {
                         }
                         .onEnded { gesture in
                             lastSheepPosition[3] = sheepOffset[3]
+                            
+                            cekSheep()
                         }
                 )
             
@@ -159,6 +179,8 @@ struct PeternakanHitung: View {
                         }
                         .onEnded { gesture in
                             lastSheepPosition[4] = sheepOffset[4]
+                            
+                            cekSheep()
                         }
                 )
             
@@ -244,6 +266,7 @@ struct PeternakanHitung: View {
         angka = Int.random(in: 1...5)
         sheepOffset = Array(repeating: .zero, count: 7)
         lastSheepPosition = Array(repeating: .zero, count: 7)
+        sheepInBasket = 0
     }
 }
 
