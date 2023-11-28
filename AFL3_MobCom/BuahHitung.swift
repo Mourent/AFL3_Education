@@ -34,6 +34,18 @@ struct BuahHitung: View {
     
             Image("basket")
                 .position(CGPoint(x: widthLayar * 0.711, y: heightLayar * 0.815))
+            
+            Image("board")
+                .resizable()
+                .scaledToFit()
+                .scaleEffect(0.13)
+                .position(CGPoint(x: widthLayar * 0.705, y: heightLayar * 0.65))
+            
+            Text("\(applesInBasket)")
+                .font(.system(size: 55, weight: .bold))
+                .foregroundColor(.red)
+                .position(CGPoint(x: widthLayar * 0.707, y: heightLayar * 0.659))
+                .border(Color.black)
     
             Button("SUBMIT") {
                 cekApple()
@@ -77,6 +89,8 @@ struct BuahHitung: View {
                         }
                         .onEnded { gesture in
                             lastApplePosition[0] = appleOffset[0]
+                            
+                            cekApple()
                         }
                 )
             Image("apple")
@@ -92,6 +106,8 @@ struct BuahHitung: View {
                         }
                         .onEnded { gesture in
                             lastApplePosition[1] = appleOffset[1]
+                            
+                            cekApple()
                         }
                 )
             Image("apple")
@@ -107,6 +123,8 @@ struct BuahHitung: View {
                         }
                         .onEnded { gesture in
                             lastApplePosition[2] = appleOffset[2]
+                            
+                            cekApple()
                         }
                 )
             Image("apple")
@@ -122,6 +140,8 @@ struct BuahHitung: View {
                         }
                         .onEnded { gesture in
                             lastApplePosition[3] = appleOffset[3]
+                            
+                            cekApple()
                         }
                 )
             Image("apple")
@@ -137,6 +157,8 @@ struct BuahHitung: View {
                         }
                         .onEnded { gesture in
                             lastApplePosition[4] = appleOffset[4]
+                            
+                            cekApple()
                         }
                 )
             Image("apple")
@@ -152,6 +174,8 @@ struct BuahHitung: View {
                         }
                         .onEnded { gesture in
                             lastApplePosition[5] = appleOffset[5]
+                            
+                            cekApple()
                         }
                 )
             Image("apple")
@@ -167,6 +191,8 @@ struct BuahHitung: View {
                         }
                         .onEnded { gesture in
                             lastApplePosition[6] = appleOffset[6]
+                            
+                            cekApple()
                         }
                 )
     
