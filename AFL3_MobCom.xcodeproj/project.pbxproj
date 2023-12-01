@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		04162DA82B191389002316A4 /* HewanMasuk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04162DA72B191389002316A4 /* HewanMasuk.swift */; };
 		0458FC3C2B14D88200D5504A /* buah.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0458FC3B2B14D88200D5504A /* buah.swift */; };
 		04F563A72B0DC5E10081ED40 /* AFL3_MobComApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F563A62B0DC5E10081ED40 /* AFL3_MobComApp.swift */; };
 		04F563A92B0DC5E10081ED40 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F563A82B0DC5E10081ED40 /* ContentView.swift */; };
@@ -38,6 +39,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		04162DA72B191389002316A4 /* HewanMasuk.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HewanMasuk.swift; sourceTree = "<group>"; };
 		0458FC3B2B14D88200D5504A /* buah.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = buah.swift; sourceTree = "<group>"; };
 		04F563A32B0DC5E10081ED40 /* AFL3_MobCom.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AFL3_MobCom.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04F563A62B0DC5E10081ED40 /* AFL3_MobComApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AFL3_MobComApp.swift; sourceTree = "<group>"; };
@@ -108,6 +110,7 @@
 				04F563A62B0DC5E10081ED40 /* AFL3_MobComApp.swift */,
 				04F563D52B14FFE40081ED40 /* BuahHitung.swift */,
 				04F563D32B12EB320081ED40 /* PeternakanHitung.swift */,
+				04162DA72B191389002316A4 /* HewanMasuk.swift */,
 				04F563A82B0DC5E10081ED40 /* ContentView.swift */,
 				0458FC3B2B14D88200D5504A /* buah.swift */,
 				04F563AA2B0DC5E30081ED40 /* Assets.xcassets */,
@@ -277,6 +280,7 @@
 				04F563A92B0DC5E10081ED40 /* ContentView.swift in Sources */,
 				04F563D62B14FFE40081ED40 /* BuahHitung.swift in Sources */,
 				04F563A72B0DC5E10081ED40 /* AFL3_MobComApp.swift in Sources */,
+				04162DA82B191389002316A4 /* HewanMasuk.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

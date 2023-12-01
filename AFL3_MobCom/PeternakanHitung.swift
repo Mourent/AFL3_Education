@@ -19,6 +19,7 @@ struct PeternakanHitung: View {
     @State private var showingBenar: Bool = false
     @State private var showingSalah: Bool = false
     @State private var goHitungApel: Bool = false
+    @Binding var displayMode: DisplayMode
     
     var body: some View {
         ZStack {
@@ -47,6 +48,17 @@ struct PeternakanHitung: View {
                 .foregroundColor(.red)
                 .position(CGPoint(x: widthLayar * 0.222, y: heightLayar * 0.775))
                 .border(Color.black)
+            Button {
+//                isStartActive = true
+                displayMode = .home
+            } label: {
+                Image("panah")
+                    .resizable()
+                    .scaledToFit()
+            }
+            
+            .frame(width:100,height:80)
+            .position(CGPoint(x: widthLayar * 0.05, y: heightLayar * 0.05))
             
             Button("SUBMIT") {
                 cekSheep()
@@ -192,7 +204,8 @@ struct PeternakanHitung: View {
                         .scaleEffect(0.5)
                     
                 Button {
-                    goHitungApel = true
+//                    goHitungApel = true
+                    displayMode = .HewanMasuk
                 } label: {
                     Image("next")
                         .resizable()
@@ -243,8 +256,9 @@ struct PeternakanHitung: View {
 
         }
         if goHitungApel {
-            BuahHitung()
-            PeternakanHitung().hidden()
+//            BuahHitung()
+//            HewanMasuk()
+//            PeternakanHitung().hidden()
         }
     }
     func cekSheep(){
@@ -270,6 +284,14 @@ struct PeternakanHitung: View {
     }
 }
 
-#Preview {
-    PeternakanHitung()
+//#Preview {
+//    PeternakanHitung()
+//}
+
+struct PeternakanHitung_Previews: PreviewProvider {
+    @State static var displayMode: DisplayMode = .PeternakanHitung
+
+    static var previews: some View {
+        PeternakanHitung(displayMode: $displayMode)
+    }
 }

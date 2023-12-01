@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+
 struct BuahHitung: View {
     @State private var lastApplePosition: [CGSize] = Array(repeating: .zero, count: 7)
     @State private var appleOffset: [CGSize] = Array(repeating: .zero, count: 7)
@@ -19,6 +20,8 @@ struct BuahHitung: View {
     @State private var showingBenar: Bool = false
     @State private var showingSalah: Bool = false
     @State private var isPeternakanHitungActive = false
+   
+    @Binding var displayMode: DisplayMode
     
     var body: some View {
         ZStack {
@@ -47,6 +50,17 @@ struct BuahHitung: View {
                 .position(CGPoint(x: widthLayar * 0.707, y: heightLayar * 0.659))
                 .border(Color.black)
     
+            Button {
+//                isStartActive = true
+                displayMode = .home
+            } label: {
+                Image("panah")
+                    .resizable()
+                    .scaledToFit()
+            }
+            
+            .frame(width:100,height:80)
+            .position(CGPoint(x: widthLayar * 0.05, y: heightLayar * 0.05))
             Button("SUBMIT") {
                 cekApple()
                 if (applesInBasket == angka){
@@ -204,7 +218,8 @@ struct BuahHitung: View {
                         .scaleEffect(0.5)
     
                 Button {
-                    isPeternakanHitungActive = true
+//                    isPeternakanHitungActive = true
+                    displayMode = .PeternakanHitung
                 } label: {
                     Image("next")
                         .resizable()
@@ -253,10 +268,10 @@ struct BuahHitung: View {
                 }
             }
         }
-        if isPeternakanHitungActive {
-            buah()
-            BuahHitung().hidden()
-        }
+//        if isPeternakanHitungActive {
+//            buah()
+//            BuahHitung().hidden()
+//        }
     }
     func cekApple(){
         dataXAwal += [(Int(widthLayar * 0.377)), Int(widthLayar * 0.544), Int(widthLayar * 0.461), Int(widthLayar * 0.586), Int(widthLayar * 0.637), Int(widthLayar * 0.494), Int(widthLayar * 0.394)]
@@ -281,6 +296,16 @@ struct BuahHitung: View {
     }
 }
 
-#Preview {
-    BuahHitung()
+//#Preview {
+//  
+//     
+//    BuahHitung(displayMode: $displayMode)
+//}
+
+struct BuahHitung_Previews: PreviewProvider {
+    @State static var displayMode: DisplayMode = .BuahHitung
+
+    static var previews: some View {
+        BuahHitung(displayMode: $displayMode)
+    }
 }

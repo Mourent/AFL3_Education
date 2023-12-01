@@ -24,9 +24,11 @@ struct buah: View {
     @State private var showingSalah: Bool = false
     @State private var isPeternakanHitungActive = false
     @State private var isStartActive = false
+    @Binding var displayMode: DisplayMode
     
     var body: some View {
         ZStack {
+        
             Image("bg")
                 .resizable()
                 .scaledToFill()
@@ -36,11 +38,16 @@ struct buah: View {
             
             
             Button {
-                isStartActive = true
+//                isStartActive = true
+                displayMode = .home
             } label: {
                 Image("panah")
-                    .position(CGPoint(x: widthLayar * 0.05, y: heightLayar * 0.08))
+                    .resizable()
+                    .scaledToFit()
             }
+            
+            .frame(width:100,height:80)
+            .position(CGPoint(x: widthLayar * 0.05, y: heightLayar * 0.05))
             
             Image("lagu")
                 .position(CGPoint(x: widthLayar * 0.95, y: heightLayar * 0.1))
@@ -221,8 +228,9 @@ struct buah: View {
                         .scaledToFit()
                         .scaleEffect(0.5)
                     
-                Button {
-                    isPeternakanHitungActive = true
+                    Button {
+//                    isPeternakanHitungActive = true
+                    displayMode = .BuahHitung
                 } label: {
                     Image("next")
                         .resizable()
@@ -272,12 +280,11 @@ struct buah: View {
             }
         }
         if isPeternakanHitungActive {
-            PeternakanHitung()
-            buah().hidden()
+//            displayMode = .BuahHitung
         }
         if isStartActive {
-            ContentView()
-            buah().hidden()
+//            ContentView()
+//            buah().hidden()
         }
     }
     func cekApple(){
@@ -319,6 +326,15 @@ struct buah: View {
     }
 }
 
-#Preview {
-    buah()
+//#Preview {
+//    buah()
+//}
+
+
+struct Buah_Previews: PreviewProvider {
+    @State static var displayMode: DisplayMode = .buah
+
+    static var previews: some View {
+        buah(displayMode: $displayMode)
+    }
 }
