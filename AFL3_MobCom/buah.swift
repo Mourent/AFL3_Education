@@ -43,6 +43,7 @@ struct buah: View {
     @State private var isStartActive = false
     @State private var winCount: Int = 0
     @State private var buahJatuh: [Bool] = Array(repeating: false, count: 9)
+    @State private var salahMasuk: [Bool] = Array(repeating: false, count: 9)
     @Binding var displayMode: DisplayMode
 
     
@@ -109,8 +110,15 @@ struct buah: View {
                                         height: (heightLayar * 0.92 - CGFloat(dataYAwal[index])) + gesture.translation.height
                                     )
                                 }
+                                if salahMasuk[index]{
+                                    buahOffset[index] = CGSize(
+                                        width: 0 + gesture.translation.width,
+                                        height: 0 + gesture.translation.height
+                                    )
+                                }
                             }
                             .onEnded{ gesture in
+                                salahMasuk[index] = false
                                 lastBuahPosition[index] = buahOffset[index]
                                 
                                 let lastBuahX = Int(lastBuahPosition[index].width) + Int(dataXAwal[index])
@@ -129,19 +137,35 @@ struct buah: View {
                                 }
                                 
                                 if randomImageName[index] == "apple" {
-                                    if (lastBuahX >= Int(widthLayar * 0.770) && lastBuahX <= Int(widthLayar * 0.854) && lastBuahY >= Int(heightLayar * 0.720) && lastBuahY <= Int(heightLayar * 0.870)) {
-                                        withAnimation(.easeInOut(duration: 1.0)) {
+                                    if (lastBuahX >= Int(widthLayar * 0.770) && lastBuahX <= Int(widthLayar * 0.854) && lastBuahY <= Int(heightLayar * 0.870)) {
+                                        withAnimation(.easeInOut(duration: 1.5)) {
                                             buahOffset[index] = CGSize(
                                                 width: widthLayar*0.811 - CGFloat(dataXAwal[index]),
-                                                height: (heightLayar * 0.85 - CGFloat(dataYAwal[index]))
+                                                height: (heightLayar * 0.83 - CGFloat(dataYAwal[index]))
                                             )
                                         }
                                         winCount += 1
                                         print(winCount)
+                                    } else if (lastBuahX >= Int(widthLayar * 0.200) && lastBuahX <= Int(widthLayar * 0.284) && lastBuahY <= Int(heightLayar * 0.870)) {
+                                        withAnimation(.easeInOut(duration: 1.5)) {
+                                            buahOffset[index] = CGSize(
+                                                width: widthLayar*0.25 - CGFloat(dataXAwal[index]),
+                                                height: (heightLayar * 0.84 - CGFloat(dataYAwal[index]))
+                                            )
+                                        }
+                                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                                            withAnimation(.easeInOut(duration: 1.5)) {
+                                                buahOffset[index] = CGSize(
+                                                    width: 0,
+                                                    height: 0
+                                                )
+                                            }
+                                        }
+                                        salahMasuk[index] = true
                                     }
                                 } else {
-                                    if (lastBuahX >= Int(widthLayar * 0.200) && lastBuahX <= Int(widthLayar * 0.284) && lastBuahY >= Int(heightLayar * 0.720) && lastBuahY <= Int(heightLayar * 0.870)) {
-                                        withAnimation(.easeInOut(duration: 1.0)) {
+                                    if (lastBuahX >= Int(widthLayar * 0.200) && lastBuahX <= Int(widthLayar * 0.284) && lastBuahY <= Int(heightLayar * 0.870)) {
+                                        withAnimation(.easeInOut(duration: 1.5)) {
                                             buahOffset[index] = CGSize(
                                                 width: widthLayar*0.25 - CGFloat(dataXAwal[index]),
                                                 height: (heightLayar * 0.85 - CGFloat(dataYAwal[index]))
@@ -149,11 +173,30 @@ struct buah: View {
                                         }
                                         winCount += 1
                                         print(winCount)
+                                    } else if (lastBuahX >= Int(widthLayar * 0.770) && lastBuahX <= Int(widthLayar * 0.854) && lastBuahY <= Int(heightLayar * 0.870)) {
+                                        withAnimation(.easeInOut(duration: 1.5)) {
+                                            buahOffset[index] = CGSize(
+                                                width: widthLayar*0.811 - CGFloat(dataXAwal[index]),
+                                                height: (heightLayar * 0.83 - CGFloat(dataYAwal[index]))
+                                            )
+                                        }
+                                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                                            withAnimation(.easeInOut(duration: 1.5)) {
+                                                buahOffset[index] = CGSize(
+                                                    width: 0,
+                                                    height: 0
+                                                )
+                                            }
+                                        }
+                                        salahMasuk[index] = true
                                     }
+
                                 }
                                 
                                 if winCount == 9 {
-                                    showingBenar = true
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                        showingBenar = true
+                                    }
                                 }
                             }
                     )
