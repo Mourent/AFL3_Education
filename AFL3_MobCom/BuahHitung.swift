@@ -9,13 +9,30 @@ import SwiftUI
 
 
 struct BuahHitung: View {
-    @State private var lastApplePosition: [CGSize] = Array(repeating: .zero, count: 7)
-    @State private var appleOffset: [CGSize] = Array(repeating: .zero, count: 7)
+    @State private var lastBuahPosition: [CGSize] = Array(repeating: .zero, count: 7)
+    @State private var buahOffset: [CGSize] = Array(repeating: .zero, count: 7)
     @State private var heightLayar = UIScreen.main.bounds.height
     @State private var widthLayar = UIScreen.main.bounds.width
-    @State private var dataXAwal: [Int] = []
-    @State private var dataYAwal: [Int] = []
+    @State private var dataXAwal: [Int] = [
+        (Int(UIScreen.main.bounds.width * 0.377)),
+        (Int(UIScreen.main.bounds.width * 0.544)),
+        (Int(UIScreen.main.bounds.width * 0.461)),
+        (Int(UIScreen.main.bounds.width * 0.586)),
+        (Int(UIScreen.main.bounds.width * 0.637)),
+        (Int(UIScreen.main.bounds.width * 0.494)),
+        (Int(UIScreen.main.bounds.width * 0.394))
+    ]
+    @State private var dataYAwal: [Int] = [
+        (Int(UIScreen.main.bounds.height * 0.360)),
+        (Int(UIScreen.main.bounds.height * 0.240)),
+        (Int(UIScreen.main.bounds.height * 0.300)),
+        (Int(UIScreen.main.bounds.height * 0.372)),
+        (Int(UIScreen.main.bounds.height * 0.480)),
+        (Int(UIScreen.main.bounds.height * 0.444)),
+        (Int(UIScreen.main.bounds.height * 0.540))
+    ]
     @State private var angka: Int = Int.random(in: 1...7)
+    @State private var buahJatuh: [Bool] = Array(repeating: false, count: 7)
     @State private var applesInBasket: Int = 0
     @State private var showingBenar: Bool = false
     @State private var showingSalah: Bool = false
@@ -36,6 +53,9 @@ struct BuahHitung: View {
                 .position(CGPoint(x: (widthLayar * 0.835), y: heightLayar * 0.695))
     
             Image("basket")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 200, height: 150)
                 .position(CGPoint(x: widthLayar * 0.711, y: heightLayar * 0.815))
             
             Image("board")
@@ -62,7 +82,6 @@ struct BuahHitung: View {
             .frame(width:100,height:80)
             .position(CGPoint(x: widthLayar * 0.05, y: heightLayar * 0.05))
             Button("SUBMIT") {
-                cekApple()
                 if (applesInBasket == angka){
                     showingBenar = true
                 }
@@ -90,126 +109,66 @@ struct BuahHitung: View {
                     .border(Color.black)
             }
     
-            Image("apple")
-                .position(CGPoint(x: widthLayar * 0.377, y: heightLayar * 0.360))
-                .offset(appleOffset[0])
-                .gesture(
-                    DragGesture()
-                        .onChanged { gesture in
-                            appleOffset[0] = CGSize(
-                                width: lastApplePosition[0].width + gesture.translation.width,
-                                height: lastApplePosition[0].height + gesture.translation.height
-                            )
-                        }
-                        .onEnded { gesture in
-                            lastApplePosition[0] = appleOffset[0]
+            ForEach(0..<7) { index in
+                Image("apple")
+                    .position(CGPoint(x: dataXAwal[index], y: dataYAwal[index]))
+                    .offset(buahOffset[index])
+                    .gesture(
+                        DragGesture()
+                            .onChanged { gesture in
+                                if !buahJatuh[index]{
+                                    buahOffset[index] = CGSize(
+                                        width: lastBuahPosition[index].width + gesture.translation.width,
+                                        height: lastBuahPosition[index].height + gesture.translation.height
+                                    )
+                                } else {
+                                    buahOffset[index] = CGSize(
+                                        width: lastBuahPosition[index].width + gesture.translation.width,
+                                        height: (heightLayar * 0.92 - CGFloat(dataYAwal[index])) + gesture.translation.height
+                                    )
+                                    lastBuahPosition[index].height = (heightLayar * 0.92 - CGFloat(dataYAwal[index]))
+                                }
+                            }
+                            .onEnded { gesture in
+                                lastBuahPosition[index] = buahOffset[index]
                             
-                            cekApple()
-                        }
-                )
-            Image("apple")
-                .position(CGPoint(x: widthLayar * 0.544, y: heightLayar * 0.240))
-                .offset(appleOffset[1])
-                .gesture(
-                    DragGesture()
-                        .onChanged { gesture in
-                            appleOffset[1] = CGSize(
-                                width: lastApplePosition[1].width + gesture.translation.width,
-                                height: lastApplePosition[1].height + gesture.translation.height
-                            )
-                        }
-                        .onEnded { gesture in
-                            lastApplePosition[1] = appleOffset[1]
-                            
-                            cekApple()
-                        }
-                )
-            Image("apple")
-                .position(CGPoint(x: widthLayar * 0.461, y: heightLayar * 0.300))
-                .offset(appleOffset[2])
-                .gesture(
-                    DragGesture()
-                        .onChanged { gesture in
-                            appleOffset[2] = CGSize(
-                                width: lastApplePosition[2].width + gesture.translation.width,
-                                height: lastApplePosition[2].height + gesture.translation.height
-                            )
-                        }
-                        .onEnded { gesture in
-                            lastApplePosition[2] = appleOffset[2]
-                            
-                            cekApple()
-                        }
-                )
-            Image("apple")
-                .position(CGPoint(x: widthLayar * 0.586, y: heightLayar * 0.372))
-                .offset(appleOffset[3])
-                .gesture(
-                    DragGesture()
-                        .onChanged { gesture in
-                            appleOffset[3] = CGSize(
-                                width: lastApplePosition[3].width + gesture.translation.width,
-                                height: lastApplePosition[3].height + gesture.translation.height
-                            )
-                        }
-                        .onEnded { gesture in
-                            lastApplePosition[3] = appleOffset[3]
-                            
-                            cekApple()
-                        }
-                )
-            Image("apple")
-                .position(CGPoint(x: widthLayar * 0.637, y: heightLayar * 0.480))
-                .offset(appleOffset[4])
-                .gesture(
-                    DragGesture()
-                        .onChanged { gesture in
-                            appleOffset[4] = CGSize(
-                                width: lastApplePosition[4].width + gesture.translation.width,
-                                height: lastApplePosition[4].height + gesture.translation.height
-                            )
-                        }
-                        .onEnded { gesture in
-                            lastApplePosition[4] = appleOffset[4]
-                            
-                            cekApple()
-                        }
-                )
-            Image("apple")
-                .position(CGPoint(x: widthLayar * 0.494, y: heightLayar * 0.444))
-                .offset(appleOffset[5])
-                .gesture(
-                    DragGesture()
-                        .onChanged { gesture in
-                            appleOffset[5] = CGSize(
-                                width: lastApplePosition[5].width + gesture.translation.width,
-                                height: lastApplePosition[5].height + gesture.translation.height
-                            )
-                        }
-                        .onEnded { gesture in
-                            lastApplePosition[5] = appleOffset[5]
-                            
-                            cekApple()
-                        }
-                )
-            Image("apple")
-                .position(CGPoint(x: widthLayar * 0.394, y: heightLayar * 0.540))
-                .offset(appleOffset[6])
-                .gesture(
-                    DragGesture()
-                        .onChanged { gesture in
-                            appleOffset[6] = CGSize(
-                                width: lastApplePosition[6].width + gesture.translation.width,
-                                height: lastApplePosition[6].height + gesture.translation.height
-                            )
-                        }
-                        .onEnded { gesture in
-                            lastApplePosition[6] = appleOffset[6]
-                            
-                            cekApple()
-                        }
-                )
-    
+                                let lastBuahX = Int(lastBuahPosition[index].width) + Int(dataXAwal[index])
+                                let lastBuahY = Int(lastBuahPosition[index].height) + Int(dataYAwal[index])
+                                
+                                if CGFloat(dataYAwal[index]) + lastBuahPosition[index].height < heightLayar * 0.85 {
+                                    withAnimation(.easeInOut(duration: 1.0)) {
+                                        buahOffset[index] = CGSize(
+                                            width: lastBuahPosition[index].width,
+                                            height: (heightLayar * 0.92 - CGFloat(dataYAwal[index]))
+                                        )
+                                    }
+                                    buahJatuh[index] = true
+                                }else {
+                                    buahJatuh[index] = false
+                                }
+                                
+                                if (lastBuahX >= Int(widthLayar * 0.670) && lastBuahX <= Int(widthLayar * 0.754) && lastBuahY <= Int(heightLayar * 0.870)) {
+                                    withAnimation(.easeInOut(duration: 1.5)) {
+                                        buahOffset[index] = CGSize(
+                                            width: widthLayar*0.71 - CGFloat(dataXAwal[index]),
+                                            height: (heightLayar * 0.835 - CGFloat(dataYAwal[index]))
+                                        )
+                                    }
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                        applesInBasket += 1
+                                        print(applesInBasket)
+                                    }
+                                }
+                            }
+                    )
+            }
+            
+            Image("basketdepan")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 300, height: 159)
+                .position(CGPoint(x: widthLayar * 0.712, y: heightLayar * 0.815))
+            
             if showingBenar {
                 ZStack{
                     Image("board")
@@ -273,26 +232,12 @@ struct BuahHitung: View {
 //            BuahHitung().hidden()
 //        }
     }
-    func cekApple(){
-        dataXAwal += [(Int(widthLayar * 0.377)), Int(widthLayar * 0.544), Int(widthLayar * 0.461), Int(widthLayar * 0.586), Int(widthLayar * 0.637), Int(widthLayar * 0.494), Int(widthLayar * 0.394)]
-        dataYAwal += [(Int(heightLayar * 0.360)), Int(heightLayar * 0.240), Int(heightLayar * 0.300), Int(heightLayar * 0.372), Int(heightLayar * 0.480), Int(heightLayar * 0.444), Int(heightLayar * 0.540)]
-        applesInBasket = 0
-        for index in 0..<7 {
-            let lastAppleX = Int(lastApplePosition[index].width) + dataXAwal[index]
-            let lastAppleY = Int(lastApplePosition[index].height) + dataYAwal[index]
-    
-            // Cek apakah posisi terakhir apel berada di dalam area keranjang
-            if (lastAppleX >= Int(widthLayar * 0.670) && lastAppleX <= Int(widthLayar * 0.754) && lastAppleY >= Int(heightLayar * 0.755) && lastAppleY <= Int(heightLayar * 0.875)) {
-                applesInBasket += 1
-                print("Apel \(index + 1) masuk ke keranjang!")
-            }
-        }
-    }
     func reset(){
         angka = Int.random(in: 1...7)
-        appleOffset = Array(repeating: .zero, count: 7)
-        lastApplePosition = Array(repeating: .zero, count: 7)
+        buahOffset = Array(repeating: .zero, count: 7)
+        lastBuahPosition = Array(repeating: .zero, count: 7)
         applesInBasket = 0
+        buahJatuh = Array(repeating: false, count: 7)
     }
 }
 
