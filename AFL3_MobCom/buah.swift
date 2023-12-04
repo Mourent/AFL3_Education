@@ -45,6 +45,9 @@ struct buah: View {
     @State private var buahJatuh: [Bool] = Array(repeating: false, count: 9)
     @State private var salahMasuk: [Bool] = Array(repeating: false, count: 9)
     @Binding var displayMode: DisplayMode
+    @State private var simpanPerubahanWidth: [CGFloat] = []
+    @State private var simpanPerubahanHeight: [CGFloat] = []
+    @State private var tabrak: [Bool] = Array(repeating: false, count: 9)
 
     
     var body: some View {
@@ -99,23 +102,98 @@ struct buah: View {
                     .gesture(
                         DragGesture()
                             .onChanged{ gesture in
-                                if !buahJatuh[index]{
-                                    buahOffset[index] = CGSize(
-                                        width: lastBuahPosition[index].width + gesture.translation.width,
-                                        height: lastBuahPosition[index].height + gesture.translation.height
-                                    )
-                                } else {
-                                    buahOffset[index] = CGSize(
-                                        width: lastBuahPosition[index].width + gesture.translation.width,
-                                        height: (heightLayar * 0.92 - CGFloat(dataYAwal[index])) + gesture.translation.height
-                                    )
-                                }
                                 if salahMasuk[index]{
                                     buahOffset[index] = CGSize(
                                         width: 0 + gesture.translation.width,
                                         height: 0 + gesture.translation.height
                                     )
+                                    lastBuahPosition[index].width = 0
+                                    lastBuahPosition[index].height = 0
                                 }
+                                if !salahMasuk[index]{
+                                    if !buahJatuh[index]{
+                                        buahOffset[index] = CGSize(
+                                            width: lastBuahPosition[index].width + gesture.translation.width,
+                                            height: lastBuahPosition[index].height + gesture.translation.height
+                                        )
+                                    } else {
+                                        buahOffset[index] = CGSize(
+                                            width: lastBuahPosition[index].width + gesture.translation.width,
+                                            height: (heightLayar * 0.92 - CGFloat(dataYAwal[index])) + gesture.translation.height
+                                        )
+                                        lastBuahPosition[index].height = (heightLayar * 0.92 - CGFloat(dataYAwal[index]))
+                                    }
+                                }
+//                                let newWidth = lastBuahPosition[index].width + gesture.translation.width + CGFloat(dataXAwal[index])
+//                                let newHeight = lastBuahPosition[index].height + gesture.translation.height + CGFloat(dataYAwal[index])
+//                                
+//                                if simpanPerubahanWidth.count > 10 {
+//                                    simpanPerubahanWidth.removeFirst(simpanPerubahanWidth.count - 10)
+//                                }
+//                                if simpanPerubahanHeight.count > 10 {
+//                                    simpanPerubahanHeight.removeFirst(simpanPerubahanHeight.count - 10)
+//                                }
+//                                
+//                                if newWidth >= widthLayar * 0.73  && newWidth <= widthLayar * 0.895 && newHeight <= heightLayar * 0.9 && newHeight >= heightLayar * 0.755 || tabrak[index] {
+//                                    let previousWidth = simpanPerubahanWidth[5]
+//                                    let previousHeight = simpanPerubahanHeight[5]
+//                                    if previousWidth < newWidth && previousWidth < widthLayar * 0.73{
+//                                        tabrak[index] = true
+//                                        if !buahJatuh[index] || salahMasuk[index]{
+//                                            buahOffset[index] = CGSize(
+//                                                width: widthLayar * 0.73 - CGFloat(dataXAwal[index]),
+//                                                height: lastBuahPosition[index].height + gesture.translation.height
+//                                            )
+//                                        } else {
+//                                            buahOffset[index] = CGSize(
+//                                                width: widthLayar * 0.73 - CGFloat(dataXAwal[index]),
+//                                                height: (heightLayar * 0.92 - CGFloat(dataYAwal[index])) + gesture.translation.height
+//                                            )
+//                                        }
+//                                        if newWidth < widthLayar * 0.73 || newHeight > heightLayar * 0.9 || newHeight < heightLayar * 0.755 {
+//                                            tabrak[index] = false
+//                                        }
+//                                    } else if previousWidth > newWidth && previousWidth > widthLayar * 0.895{
+//                                        tabrak[index] = true
+//                                        if !buahJatuh[index] || salahMasuk[index]{
+//                                            buahOffset[index] = CGSize(
+//                                                width: widthLayar * 0.895 - CGFloat(dataXAwal[index]),
+//                                                height: lastBuahPosition[index].height + gesture.translation.height
+//                                            )
+//                                        } else {
+//                                            buahOffset[index] = CGSize(
+//                                                width: widthLayar * 0.895 - CGFloat(dataXAwal[index]),
+//                                                height: (heightLayar * 0.92 - CGFloat(dataYAwal[index])) + gesture.translation.height
+//                                            )
+//                                        }
+//                                        if newWidth > widthLayar * 0.895 || newHeight > heightLayar * 0.9 || newHeight < heightLayar * 0.755{
+//                                            tabrak[index] = false
+//                                        }
+//                                    } else if previousHeight > newHeight && previousHeight > heightLayar * 0.9{
+//                                        tabrak[index] = true
+//                                            buahOffset[index] = CGSize(
+//                                                width: lastBuahPosition[index].width + gesture.translation.width,
+//                                                height:heightLayar * 0.9 - CGFloat(dataYAwal[index])
+//                                        )
+//                                        if newHeight > heightLayar * 0.9 || newWidth < widthLayar * 0.73  || newWidth > widthLayar * 0.895{
+//                                            tabrak[index] = false
+//                                        }
+//                                    } else if previousHeight < newHeight && previousHeight < heightLayar * 0.755 && newHeight > heightLayar * 0.835 {
+//                                        tabrak[index] = true
+//                                            buahOffset[index] = CGSize(
+//                                                width: lastBuahPosition[index].width + gesture.translation.width,
+//                                                height:heightLayar * 0.835 - CGFloat(dataYAwal[index])
+//                                        )
+//                                        if newHeight < heightLayar * 0.85 || newWidth < widthLayar * 0.73  || newWidth > widthLayar * 0.895{
+//                                            tabrak[index] = false
+//                                        }
+//                                    }
+//                                    
+//                                    print(tabrak[index])
+//                                } else {
+//                                    simpanPerubahanWidth.append(newWidth)
+//                                    simpanPerubahanHeight.append(newHeight)
+//                                }
                             }
                             .onEnded{ gesture in
                                 salahMasuk[index] = false
