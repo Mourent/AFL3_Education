@@ -42,8 +42,12 @@ struct buah: View {
     @State private var isPeternakanHitungActive = false
     @State private var isStartActive = false
     @State private var winCount: Int = 0
+    @State private var appleCount: Int = 0
+    @State private var lemonCount: Int = 0
     @State private var buahJatuh: [Bool] = Array(repeating: false, count: 9)
     @State private var salahMasuk: [Bool] = Array(repeating: false, count: 9)
+    @State private var dragingAllow: [Bool] = Array(repeating: true, count: 9)
+    @State private var zIndexValues: [Double] = Array(repeating: 0.0, count: 9)
     @Binding var displayMode: DisplayMode
     @State private var simpanPerubahanWidth: [CGFloat] = []
     @State private var simpanPerubahanHeight: [CGFloat] = []
@@ -76,17 +80,16 @@ struct buah: View {
             Image("lagu")
                 .position(CGPoint(x: widthLayar * 0.95, y: heightLayar * 0.1))
             
-            Image("basket")
+            Image("box")
                 .resizable()
                 .scaledToFit()
-                .frame(width: 200, height: 150)
+                .frame(width: 180, height: 150)
                 .position(CGPoint(x: widthLayar * 0.811, y: heightLayar * 0.81))
             
-            
-            Image("basket")
+            Image("box")
                 .resizable()
                 .scaledToFit()
-                .frame(width: 200, height: 150)
+                .frame(width: 180, height: 150)
                 .position(CGPoint(x: widthLayar * 0.241, y: heightLayar * 0.81))
             
             Image("papanapple")
@@ -102,194 +105,196 @@ struct buah: View {
                     .gesture(
                         DragGesture()
                             .onChanged{ gesture in
-                                if salahMasuk[index]{
-                                    buahOffset[index] = CGSize(
-                                        width: 0 + gesture.translation.width,
-                                        height: 0 + gesture.translation.height
-                                    )
-                                    lastBuahPosition[index].width = 0
-                                    lastBuahPosition[index].height = 0
-                                }
-                                if !salahMasuk[index]{
-                                    if !buahJatuh[index]{
+                                if dragingAllow[index]{
+                                    if salahMasuk[index]{
                                         buahOffset[index] = CGSize(
-                                            width: lastBuahPosition[index].width + gesture.translation.width,
-                                            height: lastBuahPosition[index].height + gesture.translation.height
+                                            width: 0 + gesture.translation.width,
+                                            height: 0 + gesture.translation.height
                                         )
-                                    } else {
-                                        buahOffset[index] = CGSize(
-                                            width: lastBuahPosition[index].width + gesture.translation.width,
-                                            height: (heightLayar * 0.92 - CGFloat(dataYAwal[index])) + gesture.translation.height
-                                        )
-                                        lastBuahPosition[index].height = (heightLayar * 0.92 - CGFloat(dataYAwal[index]))
+                                        lastBuahPosition[index].width = 0
+                                        lastBuahPosition[index].height = 0
+                                    }
+                                    if !salahMasuk[index]{
+                                        if !buahJatuh[index]{
+                                            buahOffset[index] = CGSize(
+                                                width: lastBuahPosition[index].width + gesture.translation.width,
+                                                height: lastBuahPosition[index].height + gesture.translation.height
+                                            )
+                                        } else {
+                                            buahOffset[index] = CGSize(
+                                                width: lastBuahPosition[index].width + gesture.translation.width,
+                                                height: (heightLayar * 0.92 - CGFloat(dataYAwal[index])) + gesture.translation.height
+                                            )
+                                            lastBuahPosition[index].height = (heightLayar * 0.92 - CGFloat(dataYAwal[index]))
+                                        }
+                                    }
                                     }
                                 }
-//                                let newWidth = lastBuahPosition[index].width + gesture.translation.width + CGFloat(dataXAwal[index])
-//                                let newHeight = lastBuahPosition[index].height + gesture.translation.height + CGFloat(dataYAwal[index])
-//                                
-//                                if simpanPerubahanWidth.count > 10 {
-//                                    simpanPerubahanWidth.removeFirst(simpanPerubahanWidth.count - 10)
-//                                }
-//                                if simpanPerubahanHeight.count > 10 {
-//                                    simpanPerubahanHeight.removeFirst(simpanPerubahanHeight.count - 10)
-//                                }
-//                                
-//                                if newWidth >= widthLayar * 0.73  && newWidth <= widthLayar * 0.895 && newHeight <= heightLayar * 0.9 && newHeight >= heightLayar * 0.755 || tabrak[index] {
-//                                    let previousWidth = simpanPerubahanWidth[5]
-//                                    let previousHeight = simpanPerubahanHeight[5]
-//                                    if previousWidth < newWidth && previousWidth < widthLayar * 0.73{
-//                                        tabrak[index] = true
-//                                        if !buahJatuh[index] || salahMasuk[index]{
-//                                            buahOffset[index] = CGSize(
-//                                                width: widthLayar * 0.73 - CGFloat(dataXAwal[index]),
-//                                                height: lastBuahPosition[index].height + gesture.translation.height
-//                                            )
-//                                        } else {
-//                                            buahOffset[index] = CGSize(
-//                                                width: widthLayar * 0.73 - CGFloat(dataXAwal[index]),
-//                                                height: (heightLayar * 0.92 - CGFloat(dataYAwal[index])) + gesture.translation.height
-//                                            )
-//                                        }
-//                                        if newWidth < widthLayar * 0.73 || newHeight > heightLayar * 0.9 || newHeight < heightLayar * 0.755 {
-//                                            tabrak[index] = false
-//                                        }
-//                                    } else if previousWidth > newWidth && previousWidth > widthLayar * 0.895{
-//                                        tabrak[index] = true
-//                                        if !buahJatuh[index] || salahMasuk[index]{
-//                                            buahOffset[index] = CGSize(
-//                                                width: widthLayar * 0.895 - CGFloat(dataXAwal[index]),
-//                                                height: lastBuahPosition[index].height + gesture.translation.height
-//                                            )
-//                                        } else {
-//                                            buahOffset[index] = CGSize(
-//                                                width: widthLayar * 0.895 - CGFloat(dataXAwal[index]),
-//                                                height: (heightLayar * 0.92 - CGFloat(dataYAwal[index])) + gesture.translation.height
-//                                            )
-//                                        }
-//                                        if newWidth > widthLayar * 0.895 || newHeight > heightLayar * 0.9 || newHeight < heightLayar * 0.755{
-//                                            tabrak[index] = false
-//                                        }
-//                                    } else if previousHeight > newHeight && previousHeight > heightLayar * 0.9{
-//                                        tabrak[index] = true
-//                                            buahOffset[index] = CGSize(
-//                                                width: lastBuahPosition[index].width + gesture.translation.width,
-//                                                height:heightLayar * 0.9 - CGFloat(dataYAwal[index])
-//                                        )
-//                                        if newHeight > heightLayar * 0.9 || newWidth < widthLayar * 0.73  || newWidth > widthLayar * 0.895{
-//                                            tabrak[index] = false
-//                                        }
-//                                    } else if previousHeight < newHeight && previousHeight < heightLayar * 0.755 && newHeight > heightLayar * 0.835 {
-//                                        tabrak[index] = true
-//                                            buahOffset[index] = CGSize(
-//                                                width: lastBuahPosition[index].width + gesture.translation.width,
-//                                                height:heightLayar * 0.835 - CGFloat(dataYAwal[index])
-//                                        )
-//                                        if newHeight < heightLayar * 0.85 || newWidth < widthLayar * 0.73  || newWidth > widthLayar * 0.895{
-//                                            tabrak[index] = false
-//                                        }
-//                                    }
-//                                    
-//                                    print(tabrak[index])
-//                                } else {
-//                                    simpanPerubahanWidth.append(newWidth)
-//                                    simpanPerubahanHeight.append(newHeight)
-//                                }
-                            }
                             .onEnded{ gesture in
-                                salahMasuk[index] = false
-                                lastBuahPosition[index] = buahOffset[index]
-                                
-                                let lastBuahX = Int(lastBuahPosition[index].width) + Int(dataXAwal[index])
-                                let lastBuahY = Int(lastBuahPosition[index].height) + Int(dataYAwal[index])
-                                
-                                if CGFloat(dataYAwal[index]) + lastBuahPosition[index].height < heightLayar * 0.85 {
-                                    withAnimation(.easeInOut(duration: 1.0)) {
-                                        buahOffset[index] = CGSize(
-                                            width: lastBuahPosition[index].width,
-                                            height: (heightLayar * 0.92 - CGFloat(dataYAwal[index]))
-                                        )
+                                if dragingAllow[index]{
+                                    salahMasuk[index] = false
+                                    lastBuahPosition[index] = buahOffset[index]
+                                    
+                                    let lastBuahX = Int(lastBuahPosition[index].width) + Int(dataXAwal[index])
+                                    let lastBuahY = Int(lastBuahPosition[index].height) + Int(dataYAwal[index])
+                                    
+                                    if CGFloat(dataYAwal[index]) + lastBuahPosition[index].height < heightLayar * 0.85 {
+                                        withAnimation(.easeInOut(duration: 1.0)) {
+                                            buahOffset[index] = CGSize(
+                                                width: lastBuahPosition[index].width,
+                                                height: (heightLayar * 0.92 - CGFloat(dataYAwal[index]))
+                                            )
+                                        }
+                                        buahJatuh[index] = true
+                                    }else {
+                                        buahJatuh[index] = false
                                     }
-                                    buahJatuh[index] = true
-                                }else {
-                                    buahJatuh[index] = false
-                                }
-                                
-                                if randomImageName[index] == "apple" {
-                                    if (lastBuahX >= Int(widthLayar * 0.770) && lastBuahX <= Int(widthLayar * 0.854) && lastBuahY <= Int(heightLayar * 0.870)) {
-                                        withAnimation(.easeInOut(duration: 1.5)) {
-                                            buahOffset[index] = CGSize(
-                                                width: widthLayar*0.811 - CGFloat(dataXAwal[index]),
-                                                height: (heightLayar * 0.83 - CGFloat(dataYAwal[index]))
-                                            )
-                                        }
-                                        winCount += 1
-                                        print(winCount)
-                                    } else if (lastBuahX >= Int(widthLayar * 0.200) && lastBuahX <= Int(widthLayar * 0.284) && lastBuahY <= Int(heightLayar * 0.870)) {
-                                        withAnimation(.easeInOut(duration: 1.5)) {
-                                            buahOffset[index] = CGSize(
-                                                width: widthLayar*0.25 - CGFloat(dataXAwal[index]),
-                                                height: (heightLayar * 0.84 - CGFloat(dataYAwal[index]))
-                                            )
-                                        }
-                                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                                    
+                                    if randomImageName[index] == "apple" {
+                                        if (lastBuahX >= Int(widthLayar * 0.76) && lastBuahX <= Int(widthLayar * 0.865) && lastBuahY <= Int(heightLayar * 0.8)) {
+                                            winCount += 1
+                                            appleCount += 1
+                                            print(winCount)
+                                            
+                                            if appleCount == 1 || appleCount > 5 {
+                                                withAnimation(.easeInOut(duration: 1.0)) {
+                                                    buahOffset[index] = CGSize(
+                                                        width: widthLayar*0.813 - CGFloat(dataXAwal[index]),
+                                                        height: (heightLayar * 0.79 - CGFloat(dataYAwal[index]))
+                                                    )
+                                                }
+                                                zIndexValues[index] = 0.3
+                                            } else if appleCount == 2 {
+                                                withAnimation(.easeInOut(duration: 1.0)) {
+                                                    buahOffset[index] = CGSize(
+                                                        width: widthLayar*0.789 - CGFloat(dataXAwal[index]),
+                                                        height: (heightLayar * 0.79 - CGFloat(dataYAwal[index]))
+                                                    )
+                                                }
+                                                zIndexValues[index] = 0.4
+                                            } else if appleCount == 3 {
+                                                withAnimation(.easeInOut(duration: 1.0)) {
+                                                    buahOffset[index] = CGSize(
+                                                        width: widthLayar*0.837 - CGFloat(dataXAwal[index]),
+                                                        height: (heightLayar * 0.79 - CGFloat(dataYAwal[index]))
+                                                    )
+                                                }
+                                                zIndexValues[index] = 0.2
+                                            } else if appleCount == 4 {
+                                                withAnimation(.easeInOut(duration: 1.0)) {
+                                                    buahOffset[index] = CGSize(
+                                                        width: widthLayar*0.765 - CGFloat(dataXAwal[index]),
+                                                        height: (heightLayar * 0.79 - CGFloat(dataYAwal[index]))
+                                                    )
+                                                }
+                                                zIndexValues[index] = 0.5
+                                            } else if appleCount == 5 {
+                                                withAnimation(.easeInOut(duration: 1.0)) {
+                                                    buahOffset[index] = CGSize(
+                                                        width: widthLayar*0.86 - CGFloat(dataXAwal[index]),
+                                                        height: (heightLayar * 0.79 - CGFloat(dataYAwal[index]))
+                                                    )
+                                                }
+                                                zIndexValues[index] = 0.1
+                                            }
+                                            
+                                            dragingAllow[index] = false
+                                        } else if (lastBuahX >= Int(widthLayar * 0.19) && lastBuahX <= Int(widthLayar * 0.3) && lastBuahY <= Int(heightLayar * 0.8)) {
                                             withAnimation(.easeInOut(duration: 1.5)) {
                                                 buahOffset[index] = CGSize(
-                                                    width: 0,
-                                                    height: 0
+                                                    width: widthLayar*0.25 - CGFloat(dataXAwal[index]),
+                                                    height: (heightLayar * 0.84 - CGFloat(dataYAwal[index]))
                                                 )
                                             }
+                                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                                                withAnimation(.easeInOut(duration: 1.5)) {
+                                                    buahOffset[index] = CGSize(
+                                                        width: 0,
+                                                        height: 0
+                                                    )
+                                                }
+                                            }
+                                            salahMasuk[index] = true
                                         }
-                                        salahMasuk[index] = true
-                                    }
-                                } else {
-                                    if (lastBuahX >= Int(widthLayar * 0.200) && lastBuahX <= Int(widthLayar * 0.284) && lastBuahY <= Int(heightLayar * 0.870)) {
-                                        withAnimation(.easeInOut(duration: 1.5)) {
-                                            buahOffset[index] = CGSize(
-                                                width: widthLayar*0.25 - CGFloat(dataXAwal[index]),
-                                                height: (heightLayar * 0.85 - CGFloat(dataYAwal[index]))
-                                            )
-                                        }
-                                        winCount += 1
-                                        print(winCount)
-                                    } else if (lastBuahX >= Int(widthLayar * 0.770) && lastBuahX <= Int(widthLayar * 0.854) && lastBuahY <= Int(heightLayar * 0.870)) {
-                                        withAnimation(.easeInOut(duration: 1.5)) {
-                                            buahOffset[index] = CGSize(
-                                                width: widthLayar*0.811 - CGFloat(dataXAwal[index]),
-                                                height: (heightLayar * 0.83 - CGFloat(dataYAwal[index]))
-                                            )
-                                        }
-                                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                                    } else {
+                                        if (lastBuahX >= Int(widthLayar * 0.19) && lastBuahX <= Int(widthLayar * 0.3) && lastBuahY <= Int(heightLayar * 0.8)) {
+                                            winCount += 1
+                                            lemonCount += 1
+                                            print(winCount)
+                                            
+                                            if lemonCount == 1 || lemonCount > 5{
+                                                withAnimation(.easeInOut(duration: 1.0)) {
+                                                    buahOffset[index] = CGSize(
+                                                        width: widthLayar*0.24 - CGFloat(dataXAwal[index]),
+                                                        height: (heightLayar * 0.79 - CGFloat(dataYAwal[index]))
+                                                    )
+                                                }
+                                                zIndexValues[index] = 0.8
+                                            } else if lemonCount == 2{
+                                                withAnimation(.easeInOut(duration: 1.0)) {
+                                                    buahOffset[index] = CGSize(
+                                                        width: widthLayar*0.215 - CGFloat(dataXAwal[index]),
+                                                        height: (heightLayar * 0.79 - CGFloat(dataYAwal[index]))
+                                                    )
+                                                }
+                                                zIndexValues[index] = 0.9
+                                            }else if lemonCount == 3{
+                                                withAnimation(.easeInOut(duration: 1.0)) {
+                                                    buahOffset[index] = CGSize(
+                                                        width: widthLayar*0.265 - CGFloat(dataXAwal[index]),
+                                                        height: (heightLayar * 0.79 - CGFloat(dataYAwal[index]))
+                                                    )
+                                                }
+                                                zIndexValues[index] = 0.7
+                                            }else if lemonCount == 4{
+                                                withAnimation(.easeInOut(duration: 1.0)) {
+                                                    buahOffset[index] = CGSize(
+                                                        width: widthLayar*0.190 - CGFloat(dataXAwal[index]),
+                                                        height: (heightLayar * 0.79 - CGFloat(dataYAwal[index]))
+                                                    )
+                                                }
+                                                zIndexValues[index] = 1.0
+                                            }else if lemonCount == 5{
+                                                withAnimation(.easeInOut(duration: 1.0)) {
+                                                    buahOffset[index] = CGSize(
+                                                        width: widthLayar*0.290 - CGFloat(dataXAwal[index]),
+                                                        height: (heightLayar * 0.79 - CGFloat(dataYAwal[index]))
+                                                    )
+                                                }
+                                                zIndexValues[index] = 0.6
+                                            }
+                                            
+                                            
+                                            dragingAllow[index] = false
+                                        } else if (lastBuahX >= Int(widthLayar * 0.76) && lastBuahX <= Int(widthLayar * 0.865) && lastBuahY <= Int(heightLayar * 0.8)) {
                                             withAnimation(.easeInOut(duration: 1.5)) {
                                                 buahOffset[index] = CGSize(
-                                                    width: 0,
-                                                    height: 0
+                                                    width: widthLayar*0.811 - CGFloat(dataXAwal[index]),
+                                                    height: (heightLayar * 0.83 - CGFloat(dataYAwal[index]))
                                                 )
                                             }
+                                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                                                withAnimation(.easeInOut(duration: 1.5)) {
+                                                    buahOffset[index] = CGSize(
+                                                        width: 0,
+                                                        height: 0
+                                                    )
+                                                }
+                                            }
+                                            salahMasuk[index] = true
                                         }
-                                        salahMasuk[index] = true
-                                    }
 
-                                }
-                                
-                                if winCount == 9 {
-                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                        showingBenar = true
+                                    }
+                                    
+                                    if winCount == 9 {
+                                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                            showingBenar = true
+                                        }
                                     }
                                 }
                             }
-                    )
+                    ).zIndex(zIndexValues[index])
             }
-            
-            Image("basketdepan")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 300, height: 159)
-                .position(CGPoint(x: widthLayar * 0.811, y: heightLayar * 0.81))
-            Image("basketdepan")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 300, height: 159)
-                .position(CGPoint(x: widthLayar * 0.241, y: heightLayar * 0.81))
             
             if showingBenar {
                 ZStack{
