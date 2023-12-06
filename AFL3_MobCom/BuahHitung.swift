@@ -34,9 +34,14 @@ struct BuahHitung: View {
     @State private var angka: Int = Int.random(in: 1...7)
     @State private var buahJatuh: [Bool] = Array(repeating: false, count: 7)
     @State private var applesInBasket: Int = 0
+    @State private var box1Count: Int = 0
+    @State private var box2Count: Int = 0
     @State private var showingBenar: Bool = false
     @State private var showingSalah: Bool = false
     @State private var isPeternakanHitungActive = false
+    @State private var dragingAllow: [Bool] = Array(repeating: true, count: 7)
+    @State private var boxPenuh: [Bool] = Array(repeating: false, count: 7)
+    @State private var zIndexValues: [Double] = Array(repeating: 0.0, count: 7)
    
     @Binding var displayMode: DisplayMode
     
@@ -50,26 +55,31 @@ struct BuahHitung: View {
             Image("tree")
     
             Image("cewe")
-                .position(CGPoint(x: (widthLayar * 0.835), y: heightLayar * 0.695))
+                .position(CGPoint(x: (widthLayar * 0.15), y: heightLayar * 0.7))
     
-            Image("basket")
+            Image("box")
                 .resizable()
                 .scaledToFit()
-                .frame(width: 200, height: 150)
-                .position(CGPoint(x: widthLayar * 0.711, y: heightLayar * 0.815))
+                .frame(width: 180, height: 150)
+                .position(CGPoint(x: widthLayar * 0.711, y: heightLayar * 0.85))
+            Image("box")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 180, height: 150)
+                .position(CGPoint(x: widthLayar * 0.861, y: heightLayar * 0.85))
             
             Image("board")
                 .resizable()
                 .scaledToFit()
                 .scaleEffect(0.13)
-                .position(CGPoint(x: widthLayar * 0.705, y: heightLayar * 0.65))
+                .position(CGPoint(x: widthLayar * 0.785, y: heightLayar * 0.65))
             
             Text("\(applesInBasket)")
                 .font(.system(size: 55, weight: .bold))
                 .foregroundColor(.red)
-                .position(CGPoint(x: widthLayar * 0.707, y: heightLayar * 0.659))
+                .position(CGPoint(x: widthLayar * 0.785, y: heightLayar * 0.659))
                 .border(Color.black)
-    
+            
             Button {
 //                isStartActive = true
                 displayMode = .home
@@ -99,13 +109,14 @@ struct BuahHitung: View {
     
             ZStack{
                 Image("awan")
-                    .position(CGPoint(x: widthLayar * 0.745, y: heightLayar * 0.420))
+                    .scaleEffect(x: -1, y: 1)
+                    .position(CGPoint(x: widthLayar * 0.25, y: heightLayar * 0.420))
                 Image("apple")
-                    .position(CGPoint(x: widthLayar * 0.758, y: heightLayar * 0.401))
+                    .position(CGPoint(x: widthLayar * 0.27, y: heightLayar * 0.401))
                 Text("\(angka)")
                     .font(.system(size: 55, weight: .bold))
                     .foregroundColor(.red)
-                    .position(CGPoint(x: widthLayar * 0.718, y: heightLayar * 0.404))
+                    .position(CGPoint(x: widthLayar * 0.23, y: heightLayar * 0.404))
                     .border(Color.black)
             }
     
@@ -116,58 +127,188 @@ struct BuahHitung: View {
                     .gesture(
                         DragGesture()
                             .onChanged { gesture in
-                                if !buahJatuh[index]{
-                                    buahOffset[index] = CGSize(
-                                        width: lastBuahPosition[index].width + gesture.translation.width,
-                                        height: lastBuahPosition[index].height + gesture.translation.height
-                                    )
-                                } else {
-                                    buahOffset[index] = CGSize(
-                                        width: lastBuahPosition[index].width + gesture.translation.width,
-                                        height: (heightLayar * 0.92 - CGFloat(dataYAwal[index])) + gesture.translation.height
-                                    )
-                                    lastBuahPosition[index].height = (heightLayar * 0.92 - CGFloat(dataYAwal[index]))
+                                if dragingAllow[index] {
+                                    if boxPenuh[index]{
+                                        buahOffset[index] = CGSize(
+                                            width: 0 + gesture.translation.width,
+                                            height: 0 + gesture.translation.height
+                                        )
+                                        lastBuahPosition[index].width = 0
+                                        lastBuahPosition[index].height = 0
+                                    }
+                                    if !boxPenuh[index]{
+                                        if !buahJatuh[index]{
+                                            buahOffset[index] = CGSize(
+                                                width: lastBuahPosition[index].width + gesture.translation.width,
+                                                height: lastBuahPosition[index].height + gesture.translation.height
+                                            )
+                                        } else {
+                                            buahOffset[index] = CGSize(
+                                                width: lastBuahPosition[index].width + gesture.translation.width,
+                                                height: (heightLayar * 0.92 - CGFloat(dataYAwal[index])) + gesture.translation.height
+                                            )
+                                            lastBuahPosition[index].height = (heightLayar * 0.92 - CGFloat(dataYAwal[index]))
+                                        }
+                                    }
+                                    }
                                 }
-                            }
                             .onEnded { gesture in
-                                lastBuahPosition[index] = buahOffset[index]
-                            
-                                let lastBuahX = Int(lastBuahPosition[index].width) + Int(dataXAwal[index])
-                                let lastBuahY = Int(lastBuahPosition[index].height) + Int(dataYAwal[index])
+                                if dragingAllow[index] {
+                                    boxPenuh[index] = false
+                                    lastBuahPosition[index] = buahOffset[index]
                                 
-                                if CGFloat(dataYAwal[index]) + lastBuahPosition[index].height < heightLayar * 0.85 {
-                                    withAnimation(.easeInOut(duration: 1.0)) {
-                                        buahOffset[index] = CGSize(
-                                            width: lastBuahPosition[index].width,
-                                            height: (heightLayar * 0.92 - CGFloat(dataYAwal[index]))
-                                        )
+                                    let lastBuahX = Int(lastBuahPosition[index].width) + Int(dataXAwal[index])
+                                    let lastBuahY = Int(lastBuahPosition[index].height) + Int(dataYAwal[index])
+                                    
+                                    if CGFloat(dataYAwal[index]) + lastBuahPosition[index].height < heightLayar * 0.85 {
+                                        withAnimation(.easeInOut(duration: 1.0)) {
+                                            buahOffset[index] = CGSize(
+                                                width: lastBuahPosition[index].width,
+                                                height: (heightLayar * 0.92 - CGFloat(dataYAwal[index]))
+                                            )
+                                        }
+                                        buahJatuh[index] = true
+                                    }else {
+                                        buahJatuh[index] = false
                                     }
-                                    buahJatuh[index] = true
-                                }else {
-                                    buahJatuh[index] = false
-                                }
-                                
-                                if (lastBuahX >= Int(widthLayar * 0.670) && lastBuahX <= Int(widthLayar * 0.754) && lastBuahY <= Int(heightLayar * 0.870)) {
-                                    withAnimation(.easeInOut(duration: 1.5)) {
-                                        buahOffset[index] = CGSize(
-                                            width: widthLayar*0.71 - CGFloat(dataXAwal[index]),
-                                            height: (heightLayar * 0.835 - CGFloat(dataYAwal[index]))
-                                        )
-                                    }
-                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                        applesInBasket += 1
-                                        print(applesInBasket)
+                                    
+                                    if (lastBuahX >= Int(widthLayar * 0.65) && lastBuahX <= Int(widthLayar * 0.765) && lastBuahY <= Int(heightLayar * 0.85)) {
+                                        box1Count += 1
+                                        if box1Count > 5 {
+                                            withAnimation(.easeInOut(duration: 1.5)) {
+                                                buahOffset[index] = CGSize(
+                                                    width: widthLayar*0.705 - CGFloat(dataXAwal[index]),
+                                                    height: (heightLayar * 0.83 - CGFloat(dataYAwal[index]))
+                                                )
+                                            }
+                                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                                                withAnimation(.easeInOut(duration: 1.5)) {
+                                                    buahOffset[index] = CGSize(
+                                                        width: 0,
+                                                        height: 0
+                                                    )
+                                                }
+                                            }
+                                            boxPenuh[index] = true
+                                        } else {
+                                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                                applesInBasket += 1
+                                                print(applesInBasket)
+                                            }
+                                            dragingAllow[index] = false
+                                            if box1Count == 1 {
+                                                withAnimation(.easeInOut(duration: 1.0)) {
+                                                    buahOffset[index] = CGSize(
+                                                        width: widthLayar*0.705 - CGFloat(dataXAwal[index]),
+                                                        height: (heightLayar * 0.83 - CGFloat(dataYAwal[index]))
+                                                    )
+                                                }
+                                                zIndexValues[index] = 0.8
+                                            } else if box1Count == 2 {
+                                                withAnimation(.easeInOut(duration: 1.0)) {
+                                                    buahOffset[index] = CGSize(
+                                                        width: widthLayar*0.680 - CGFloat(dataXAwal[index]),
+                                                        height: (heightLayar * 0.83 - CGFloat(dataYAwal[index]))
+                                                    )
+                                                }
+                                                zIndexValues[index] = 0.9
+                                            } else if box1Count == 3 {
+                                                withAnimation(.easeInOut(duration: 1.0)) {
+                                                    buahOffset[index] = CGSize(
+                                                        width: widthLayar*0.735 - CGFloat(dataXAwal[index]),
+                                                        height: (heightLayar * 0.83 - CGFloat(dataYAwal[index]))
+                                                    )
+                                                }
+                                                zIndexValues[index] = 0.7
+                                            } else if box1Count == 4 {
+                                                withAnimation(.easeInOut(duration: 1.0)) {
+                                                    buahOffset[index] = CGSize(
+                                                        width: widthLayar*0.655 - CGFloat(dataXAwal[index]),
+                                                        height: (heightLayar * 0.83 - CGFloat(dataYAwal[index]))
+                                                    )
+                                                }
+                                                zIndexValues[index] = 1.0
+                                            } else if box1Count == 5 {
+                                                withAnimation(.easeInOut(duration: 1.0)) {
+                                                    buahOffset[index] = CGSize(
+                                                        width: widthLayar*0.76 - CGFloat(dataXAwal[index]),
+                                                        height: (heightLayar * 0.83 - CGFloat(dataYAwal[index]))
+                                                    )
+                                                }
+                                                zIndexValues[index] = 0.6
+                                            }
+                                        }
+                                    } else if (lastBuahX >= Int(widthLayar * 0.81) && lastBuahX <= Int(widthLayar * 0.915) && lastBuahY <= Int(heightLayar * 0.85)) {
+                                        box2Count += 1
+                                        if box2Count > 5 {
+                                            withAnimation(.easeInOut(duration: 1.5)) {
+                                                buahOffset[index] = CGSize(
+                                                    width: widthLayar*0.865 - CGFloat(dataXAwal[index]),
+                                                    height: (heightLayar * 0.83 - CGFloat(dataYAwal[index]))
+                                                )
+                                            }
+                                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                                                withAnimation(.easeInOut(duration: 1.5)) {
+                                                    buahOffset[index] = CGSize(
+                                                        width: 0,
+                                                        height: 0
+                                                    )
+                                                }
+                                            }
+                                            boxPenuh[index] = true
+                                        } else {
+                                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                                applesInBasket += 1
+                                                print(applesInBasket)
+                                            }
+                                            dragingAllow[index] = false
+                                            if box2Count == 1 {
+                                                withAnimation(.easeInOut(duration: 1.0)) {
+                                                    buahOffset[index] = CGSize(
+                                                        width: widthLayar*0.865 - CGFloat(dataXAwal[index]),
+                                                        height: (heightLayar * 0.83 - CGFloat(dataYAwal[index]))
+                                                    )
+                                                }
+                                                zIndexValues[index] = 0.3
+                                            } else if box2Count == 2 {
+                                                withAnimation(.easeInOut(duration: 1.0)) {
+                                                    buahOffset[index] = CGSize(
+                                                        width: widthLayar*0.840 - CGFloat(dataXAwal[index]),
+                                                        height: (heightLayar * 0.83 - CGFloat(dataYAwal[index]))
+                                                    )
+                                                }
+                                                zIndexValues[index] = 0.4
+                                            } else if box2Count == 3 {
+                                                withAnimation(.easeInOut(duration: 1.0)) {
+                                                    buahOffset[index] = CGSize(
+                                                        width: widthLayar*0.890 - CGFloat(dataXAwal[index]),
+                                                        height: (heightLayar * 0.83 - CGFloat(dataYAwal[index]))
+                                                    )
+                                                }
+                                                zIndexValues[index] = 0.2
+                                            } else if box2Count == 4 {
+                                                withAnimation(.easeInOut(duration: 1.0)) {
+                                                    buahOffset[index] = CGSize(
+                                                        width: widthLayar*0.815 - CGFloat(dataXAwal[index]),
+                                                        height: (heightLayar * 0.83 - CGFloat(dataYAwal[index]))
+                                                    )
+                                                }
+                                                zIndexValues[index] = 0.5
+                                            } else if box2Count == 5 {
+                                                withAnimation(.easeInOut(duration: 1.0)) {
+                                                    buahOffset[index] = CGSize(
+                                                        width: widthLayar*0.910 - CGFloat(dataXAwal[index]),
+                                                        height: (heightLayar * 0.83 - CGFloat(dataYAwal[index]))
+                                                    )
+                                                }
+                                                zIndexValues[index] = 0.1
+                                            }
+                                        }
                                     }
                                 }
                             }
-                    )
+                    ).zIndex(zIndexValues[index])
             }
-            
-            Image("basketdepan")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 300, height: 159)
-                .position(CGPoint(x: widthLayar * 0.712, y: heightLayar * 0.815))
             
             if showingBenar {
                 ZStack{
@@ -237,7 +378,10 @@ struct BuahHitung: View {
         buahOffset = Array(repeating: .zero, count: 7)
         lastBuahPosition = Array(repeating: .zero, count: 7)
         applesInBasket = 0
+        box1Count = 0
+        box2Count = 0
         buahJatuh = Array(repeating: false, count: 7)
+        dragingAllow = Array(repeating: true, count: 7)
     }
 }
 
