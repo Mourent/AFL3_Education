@@ -15,6 +15,8 @@ struct ContentView: View {
     var body: some View {
         
         switch displayMode {
+        case .kelinci:
+            KelinciCocok(displayMode: $displayMode)
         case .buah:
             buah(displayMode: $displayMode) // View dari file BuahView.swift
         case .BuahHitung:
@@ -32,7 +34,7 @@ struct ContentView: View {
                 
                 Button {
 //                    isBUAHActive = true
-                    displayMode = .buah
+                    displayMode = .kelinci
                 } label: {
                     Image("buttonplay")
                 }
@@ -53,6 +55,7 @@ enum DisplayMode {
     case BuahHitung
     case PeternakanHitung
     case HewanMasuk
+    case kelinci
 }
 #Preview {
     ContentView()
