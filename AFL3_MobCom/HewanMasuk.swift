@@ -109,6 +109,7 @@
 import SwiftUI
 
 struct HewanMasuk: View {
+    @State private var isMusicPlaying = true
     @State private var forbiddenArea_Kandang_Kiri: CGRect = .zero
     @State private var forbiddenArea_Kandang_Kanan: CGRect = .zero
     @State private var forbiddenArea: CGRect = .zero
@@ -151,6 +152,18 @@ struct HewanMasuk: View {
                 
                 .frame(width:100,height:80)
                 .position(CGPoint(x: fullGeometry.size.width * 0.05, y: fullGeometry.size.height * 0.05))
+                
+                Button {
+                    //                isStartActive = true
+                    toggleMusic()
+                } label: {
+                    Image(isMusicPlaying ? "lagu" : "lagu")
+                        .resizable()
+                        .scaledToFit()
+                }
+                .frame(width:100,height:80)
+                .position(CGPoint(x: fullGeometry.size.width * 0.95, y: fullGeometry.size.height * 0.1))
+
                 
                 // Objek terlarang yang akan menentukan area terlarang
                 
@@ -587,6 +600,14 @@ struct HewanMasuk: View {
         }
         
         return CGPoint(x: safeX, y: safeY)
+    }
+    func toggleMusic() {
+        if isMusicPlaying {
+            audioPlayer?.stop()
+        } else {
+            audioPlayer?.play()
+        }
+        isMusicPlaying.toggle()
     }
 
 }

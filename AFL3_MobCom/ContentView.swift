@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var isMusicPlaying = true
     @State private var heightLayar = UIScreen.main.bounds.height
     @State private var widthLayar = UIScreen.main.bounds.width
     @State private var isBUAHActive = false
@@ -33,11 +34,25 @@ struct ContentView: View {
                     .edgesIgnoringSafeArea(.all)
                 
                 Button {
+                    //                isStartActive = true
+                    toggleMusic()
+                } label: {
+                    Image(isMusicPlaying ? "lagu" : "lagu")
+                        .resizable()
+                        .scaledToFit()
+                }
+                .frame(width:100,height:80)
+                .position(CGPoint(x: widthLayar * 0.95, y: heightLayar * 0.1))
+
+                
+                Button {
 //                    isBUAHActive = true
                     displayMode = .kelinci
                 } label: {
                     Image("buttonplay")
                 }
+            }.onAppear{
+                playSound(sound: "soundtrack", type: "mp3")
             }
             
 //            if isBUAHActive {
@@ -45,8 +60,15 @@ struct ContentView: View {
 //                ContentView().hidden()
 //            }
         }
-        
     }
+    func toggleMusic() {
+            if isMusicPlaying {
+                audioPlayer?.stop()
+            } else {
+                audioPlayer?.play()
+            }
+            isMusicPlaying.toggle()
+        }
 }
 
 enum DisplayMode {

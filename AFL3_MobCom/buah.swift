@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct buah: View {
+    @State private var isMusicPlaying = true
     @State private var lastBuahPosition: [CGSize] = Array(repeating: .zero, count: 9)
     @State private var buahOffset: [CGSize] = Array(repeating: .zero, count: 9)
     @State private var heightLayar = UIScreen.main.bounds.height
@@ -77,8 +78,17 @@ struct buah: View {
             .frame(width:100,height:80)
             .position(CGPoint(x: widthLayar * 0.05, y: heightLayar * 0.05))
             
-            Image("lagu")
-                .position(CGPoint(x: widthLayar * 0.95, y: heightLayar * 0.1))
+            Button {
+                //                isStartActive = true
+                toggleMusic()
+            } label: {
+                Image(isMusicPlaying ? "lagu" : "lagu")
+                    .resizable()
+                    .scaledToFit()
+            }
+            .frame(width:100,height:80)
+            .position(CGPoint(x: widthLayar * 0.95, y: heightLayar * 0.1))
+
             
             Image("box")
                 .resizable()
@@ -326,6 +336,14 @@ struct buah: View {
             }
         }
     }
+    func toggleMusic() {
+            if isMusicPlaying {
+                audioPlayer?.stop()
+            } else {
+                audioPlayer?.play()
+            }
+            isMusicPlaying.toggle()
+        }
 }
 
 

@@ -9,6 +9,7 @@ import SwiftUI
 
 
 struct BuahHitung: View {
+    @State private var isMusicPlaying = true
     @State private var lastBuahPosition: [CGSize] = Array(repeating: .zero, count: 7)
     @State private var buahOffset: [CGSize] = Array(repeating: .zero, count: 7)
     @State private var heightLayar = UIScreen.main.bounds.height
@@ -88,9 +89,21 @@ struct BuahHitung: View {
                     .resizable()
                     .scaledToFit()
             }
-            
             .frame(width:100,height:80)
             .position(CGPoint(x: widthLayar * 0.05, y: heightLayar * 0.05))
+            
+            Button {
+                //                isStartActive = true
+                toggleMusic()
+            } label: {
+                Image(isMusicPlaying ? "lagu" : "lagu")
+                    .resizable()
+                    .scaledToFit()
+            }
+            .frame(width:100,height:80)
+            .position(CGPoint(x: widthLayar * 0.95, y: heightLayar * 0.1))
+
+            
             Button("SUBMIT") {
                 if (applesInBasket == angka){
                     showingBenar = true
@@ -383,6 +396,14 @@ struct BuahHitung: View {
         buahJatuh = Array(repeating: false, count: 7)
         dragingAllow = Array(repeating: true, count: 7)
     }
+    func toggleMusic() {
+            if isMusicPlaying {
+                audioPlayer?.stop()
+            } else {
+                audioPlayer?.play()
+            }
+            isMusicPlaying.toggle()
+        }
 }
 
 //#Preview {

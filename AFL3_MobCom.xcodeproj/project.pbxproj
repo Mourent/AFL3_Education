@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		04162DA82B191389002316A4 /* HewanMasuk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04162DA72B191389002316A4 /* HewanMasuk.swift */; };
 		0445FEFF2B21C11B0043D23A /* KelinciCocok.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0445FEFE2B21C11B0043D23A /* KelinciCocok.swift */; };
+		0445FF012B2C630B0043D23A /* Soundtrack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0445FF002B2C630B0043D23A /* Soundtrack.swift */; };
+		0445FF032B2C65F00043D23A /* soundtrack.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0445FF022B2C65F00043D23A /* soundtrack.mp3 */; };
+		0445FF062B2C69360043D23A /* win.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0445FF052B2C69360043D23A /* win.mp3 */; };
 		0458FC3C2B14D88200D5504A /* buah.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0458FC3B2B14D88200D5504A /* buah.swift */; };
 		04F563A72B0DC5E10081ED40 /* AFL3_MobComApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F563A62B0DC5E10081ED40 /* AFL3_MobComApp.swift */; };
 		04F563A92B0DC5E10081ED40 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F563A82B0DC5E10081ED40 /* ContentView.swift */; };
@@ -42,6 +45,9 @@
 /* Begin PBXFileReference section */
 		04162DA72B191389002316A4 /* HewanMasuk.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HewanMasuk.swift; sourceTree = "<group>"; };
 		0445FEFE2B21C11B0043D23A /* KelinciCocok.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KelinciCocok.swift; sourceTree = "<group>"; };
+		0445FF002B2C630B0043D23A /* Soundtrack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Soundtrack.swift; sourceTree = "<group>"; };
+		0445FF022B2C65F00043D23A /* soundtrack.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = soundtrack.mp3; sourceTree = "<group>"; };
+		0445FF052B2C69360043D23A /* win.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = win.mp3; sourceTree = "<group>"; };
 		0458FC3B2B14D88200D5504A /* buah.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = buah.swift; sourceTree = "<group>"; };
 		04F563A32B0DC5E10081ED40 /* AFL3_MobCom.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AFL3_MobCom.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04F563A62B0DC5E10081ED40 /* AFL3_MobComApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AFL3_MobComApp.swift; sourceTree = "<group>"; };
@@ -84,6 +90,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0445FF042B2C66820043D23A /* sound */ = {
+			isa = PBXGroup;
+			children = (
+				0445FF052B2C69360043D23A /* win.mp3 */,
+				0445FF022B2C65F00043D23A /* soundtrack.mp3 */,
+			);
+			path = sound;
+			sourceTree = "<group>";
+		};
 		04F5639A2B0DC5E10081ED40 = {
 			isa = PBXGroup;
 			children = (
@@ -108,10 +123,12 @@
 		04F563A52B0DC5E10081ED40 /* AFL3_MobCom */ = {
 			isa = PBXGroup;
 			children = (
+				0445FF042B2C66820043D23A /* sound */,
 				04F563D22B12E7B40081ED40 /* AFL3-MobCom-Info.plist */,
 				04F563A62B0DC5E10081ED40 /* AFL3_MobComApp.swift */,
 				04F563D52B14FFE40081ED40 /* BuahHitung.swift */,
 				04F563D32B12EB320081ED40 /* PeternakanHitung.swift */,
+				0445FF002B2C630B0043D23A /* Soundtrack.swift */,
 				04162DA72B191389002316A4 /* HewanMasuk.swift */,
 				0445FEFE2B21C11B0043D23A /* KelinciCocok.swift */,
 				04F563A82B0DC5E10081ED40 /* ContentView.swift */,
@@ -251,8 +268,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0445FF062B2C69360043D23A /* win.mp3 in Resources */,
 				04F563D12B12E78B0081ED40 /* PaytoneOne-Regular.ttf in Resources */,
 				04F563AE2B0DC5E30081ED40 /* Preview Assets.xcassets in Resources */,
+				0445FF032B2C65F00043D23A /* soundtrack.mp3 in Resources */,
 				04F563AB2B0DC5E30081ED40 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -279,6 +298,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				04F563D42B12EB320081ED40 /* PeternakanHitung.swift in Sources */,
+				0445FF012B2C630B0043D23A /* Soundtrack.swift in Sources */,
 				0458FC3C2B14D88200D5504A /* buah.swift in Sources */,
 				04F563A92B0DC5E10081ED40 /* ContentView.swift in Sources */,
 				0445FEFF2B21C11B0043D23A /* KelinciCocok.swift in Sources */,

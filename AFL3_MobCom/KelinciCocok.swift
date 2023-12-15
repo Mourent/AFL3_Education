@@ -49,6 +49,7 @@ struct KelinciCocok: View {
     @State private var zIndexV: Double = 0.0
     @State private var win: [Int] = Array(repeating: 0, count: 3)
     @State private var showingBenar: Bool = false
+    @State private var isMusicPlaying = true
     
     var body: some View {
         ZStack{
@@ -65,12 +66,19 @@ struct KelinciCocok: View {
                     .resizable()
                     .scaledToFit()
             }
-            
             .frame(width:100,height:80)
             .position(CGPoint(x: widthLayar * 0.05, y: heightLayar * 0.05))
             
-            Image("lagu")
-                .position(CGPoint(x: widthLayar * 0.95, y: heightLayar * 0.1))
+            Button {
+                //                isStartActive = true
+                toggleMusic()
+            } label: {
+                Image(isMusicPlaying ? "lagu" : "lagu")
+                    .resizable()
+                    .scaledToFit()
+            }
+            .frame(width:100,height:80)
+            .position(CGPoint(x: widthLayar * 0.95, y: heightLayar * 0.1))
             
             Image("box")
                 .resizable()
@@ -398,6 +406,7 @@ struct KelinciCocok: View {
                         }
 
                         if win[0] == 1 && win[1] == 1 && win[2] == 1{
+                            playSoundEffect(sound: "win", type: "mp3")
                             showingBenar = true
                         }
 
@@ -523,6 +532,14 @@ struct KelinciCocok: View {
             }
         }
     }
+    func toggleMusic() {
+            if isMusicPlaying {
+                audioPlayer?.stop()
+            } else {
+                audioPlayer?.play()
+            }
+            isMusicPlaying.toggle()
+        }
 }
 
 struct Kelinci_Previews: PreviewProvider {
