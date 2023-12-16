@@ -8,24 +8,24 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var isMusicPlaying = true
     @State private var heightLayar = UIScreen.main.bounds.height
     @State private var widthLayar = UIScreen.main.bounds.width
     @State private var isBUAHActive = false
     @State private var displayMode: DisplayMode = .home
+    @State private var isMusicPlaying: Bool = true
     var body: some View {
         
         switch displayMode {
         case .kelinci:
-            KelinciCocok(displayMode: $displayMode)
+            KelinciCocok(displayMode: $displayMode, isMusicPlaying: $isMusicPlaying)
         case .buah:
-            buah(displayMode: $displayMode) // View dari file BuahView.swift
+            buah(isMusicPlaying: $isMusicPlaying, displayMode: $displayMode)// View dari file BuahView.swift
         case .BuahHitung:
-            BuahHitung(displayMode: $displayMode) // View dari file HewanMasukView.swift
+            BuahHitung(isMusicPlaying: $isMusicPlaying, displayMode: $displayMode) // View dari file HewanMasukView.swift
         case .PeternakanHitung:
-            PeternakanHitung(displayMode: $displayMode) // View dari file ModeKetigaView.swift
+            PeternakanHitung(isMusicPlaying: $isMusicPlaying, displayMode: $displayMode) // View dari file ModeKetigaView.swift
         case .HewanMasuk:
-            HewanMasuk(displayMode: $displayMode) // View dari file ModeKeempatView.swift
+            HewanMasuk(isMusicPlaying: $isMusicPlaying, displayMode: $displayMode) // View dari file ModeKeempatView.swift
         case .home:
             ZStack {
                 Image("bgstart")
@@ -53,6 +53,7 @@ struct ContentView: View {
                 }
             }.onAppear{
                 playSound(sound: "soundtrack", type: "mp3")
+                isMusicPlaying = true
             }
             
 //            if isBUAHActive {

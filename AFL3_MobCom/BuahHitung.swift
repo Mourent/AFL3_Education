@@ -9,7 +9,7 @@ import SwiftUI
 
 
 struct BuahHitung: View {
-    @State private var isMusicPlaying = true
+    @Binding var isMusicPlaying: Bool
     @State private var lastBuahPosition: [CGSize] = Array(repeating: .zero, count: 7)
     @State private var buahOffset: [CGSize] = Array(repeating: .zero, count: 7)
     @State private var heightLayar = UIScreen.main.bounds.height
@@ -414,8 +414,9 @@ struct BuahHitung: View {
 
 struct BuahHitung_Previews: PreviewProvider {
     @State static var displayMode: DisplayMode = .BuahHitung
+    @State static var isMusicPlaying: Bool = true
 
     static var previews: some View {
-        BuahHitung(displayMode: $displayMode)
+        BuahHitung(isMusicPlaying: $isMusicPlaying, displayMode: $displayMode)
     }
 }

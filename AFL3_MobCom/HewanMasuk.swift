@@ -109,7 +109,7 @@
 import SwiftUI
 
 struct HewanMasuk: View {
-    @State private var isMusicPlaying = true
+    @Binding var isMusicPlaying: Bool
     @State private var forbiddenArea_Kandang_Kiri: CGRect = .zero
     @State private var forbiddenArea_Kandang_Kanan: CGRect = .zero
     @State private var forbiddenArea: CGRect = .zero
@@ -635,8 +635,10 @@ struct Sheep: Identifiable {
 
 struct HewanMasuk_Previews: PreviewProvider {
     @State static var displayMode: DisplayMode = .HewanMasuk
+    @State static var isMusicPlaying: Bool = true
+
 
     static var previews: some View {
-        HewanMasuk(displayMode: $displayMode)
+        HewanMasuk(isMusicPlaying: $isMusicPlaying, displayMode: $displayMode)
     }
 }

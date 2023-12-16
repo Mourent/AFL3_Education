@@ -9,6 +9,7 @@ import SwiftUI
 
 struct KelinciCocok: View {
     @Binding var displayMode: DisplayMode
+    @Binding var isMusicPlaying: Bool
     @State private var lastBuahPosition: [CGSize] = Array(repeating: .zero, count: 7)
     @State private var buahOffset: [CGSize] = Array(repeating: .zero, count: 7)
     @State private var heightLayar = UIScreen.main.bounds.height
@@ -49,7 +50,6 @@ struct KelinciCocok: View {
     @State private var zIndexV: Double = 0.0
     @State private var win: [Int] = Array(repeating: 0, count: 3)
     @State private var showingBenar: Bool = false
-    @State private var isMusicPlaying = true
     
     var body: some View {
         ZStack{
@@ -544,8 +544,9 @@ struct KelinciCocok: View {
 
 struct Kelinci_Previews: PreviewProvider {
     @State static var displayMode: DisplayMode = .kelinci
+    @State static var isMusicPlaying: Bool = true
 
     static var previews: some View {
-        KelinciCocok(displayMode: $displayMode)
+        KelinciCocok(displayMode: $displayMode, isMusicPlaying: $isMusicPlaying)
     }
 }

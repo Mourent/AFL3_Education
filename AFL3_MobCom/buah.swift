@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct buah: View {
-    @State private var isMusicPlaying = true
+    @Binding var isMusicPlaying: Bool
     @State private var lastBuahPosition: [CGSize] = Array(repeating: .zero, count: 9)
     @State private var buahOffset: [CGSize] = Array(repeating: .zero, count: 9)
     @State private var heightLayar = UIScreen.main.bounds.height
@@ -212,8 +212,8 @@ struct buah: View {
                                         } else if (lastBuahX >= Int(widthLayar * 0.19) && lastBuahX <= Int(widthLayar * 0.3) && lastBuahY <= Int(heightLayar * 0.8)) {
                                             withAnimation(.easeInOut(duration: 1.5)) {
                                                 buahOffset[index] = CGSize(
-                                                    width: widthLayar*0.25 - CGFloat(dataXAwal[index]),
-                                                    height: (heightLayar * 0.84 - CGFloat(dataYAwal[index]))
+                                                    width: widthLayar*0.24 - CGFloat(dataXAwal[index]),
+                                                    height: (heightLayar * 0.79 - CGFloat(dataYAwal[index]))
                                                 )
                                             }
                                             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
@@ -279,8 +279,8 @@ struct buah: View {
                                         } else if (lastBuahX >= Int(widthLayar * 0.76) && lastBuahX <= Int(widthLayar * 0.865) && lastBuahY <= Int(heightLayar * 0.8)) {
                                             withAnimation(.easeInOut(duration: 1.5)) {
                                                 buahOffset[index] = CGSize(
-                                                    width: widthLayar*0.811 - CGFloat(dataXAwal[index]),
-                                                    height: (heightLayar * 0.83 - CGFloat(dataYAwal[index]))
+                                                    width: widthLayar*0.813 - CGFloat(dataXAwal[index]),
+                                                    height: (heightLayar * 0.79 - CGFloat(dataYAwal[index]))
                                                 )
                                             }
                                             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
@@ -349,8 +349,9 @@ struct buah: View {
 
 struct Buah_Previews: PreviewProvider {
     @State static var displayMode: DisplayMode = .buah
+    @State static var isMusicPlaying: Bool = true
 
     static var previews: some View {
-        buah(displayMode: $displayMode)
+        buah(isMusicPlaying: $isMusicPlaying, displayMode: $displayMode)
     }
 }

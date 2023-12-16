@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct PeternakanHitung: View {
+    @Binding var isMusicPlaying: Bool
     @State private var lastSheepPosition: [CGSize] = Array(repeating: .zero, count: 7)
     @State private var sheepOffset: [CGSize] = Array(repeating: .zero, count: 7)
     @State private var heightLayar = UIScreen.main.bounds.height
@@ -56,9 +57,19 @@ struct PeternakanHitung: View {
                     .resizable()
                     .scaledToFit()
             }
-            
             .frame(width:100,height:80)
             .position(CGPoint(x: widthLayar * 0.05, y: heightLayar * 0.05))
+            
+            Button {
+                //                isStartActive = true
+                toggleMusic()
+            } label: {
+                Image(isMusicPlaying ? "lagu" : "lagu")
+                    .resizable()
+                    .scaledToFit()
+            }
+            .frame(width:100,height:80)
+            .position(CGPoint(x: widthLayar * 0.95, y: heightLayar * 0.1))
             
             Button("SUBMIT") {
                 cekSheep()
@@ -282,6 +293,14 @@ struct PeternakanHitung: View {
         lastSheepPosition = Array(repeating: .zero, count: 7)
         sheepInBasket = 0
     }
+    func toggleMusic() {
+            if isMusicPlaying {
+                audioPlayer?.stop()
+            } else {
+                audioPlayer?.play()
+            }
+            isMusicPlaying.toggle()
+        }
 }
 
 //#Preview {
@@ -290,8 +309,9 @@ struct PeternakanHitung: View {
 
 struct PeternakanHitung_Previews: PreviewProvider {
     @State static var displayMode: DisplayMode = .PeternakanHitung
+    @State static var isMusicPlaying: Bool = true
 
     static var previews: some View {
-        PeternakanHitung(displayMode: $displayMode)
+        PeternakanHitung(isMusicPlaying: $isMusicPlaying, displayMode: $displayMode)
     }
 }
