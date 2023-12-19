@@ -77,7 +77,7 @@ func sliceImage(image: UIImage, intoRows rowCount: Int, andColumns columnCount: 
 struct PuzzlePage: View {
     @Binding var isMusicPlaying: Bool
 
-    @State private var audioPlayer: AVAudioPlayer?
+    @State private var audioPlayers: AVAudioPlayer?
     
     private let rows = 3
     private let columns = 3
@@ -312,8 +312,8 @@ struct PuzzlePage: View {
     func playSound(soundName: String, soundType: String) {
         if let path = Bundle.main.path(forResource: soundName, ofType: soundType) {
             do {
-                audioPlayer = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
-                audioPlayer?.play()
+                audioPlayers = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
+                audioPlayers?.play()
             } catch {
                 print("Could not find and play the sound file.")
             }
