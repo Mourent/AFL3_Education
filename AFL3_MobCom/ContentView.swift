@@ -26,6 +26,8 @@ struct ContentView: View {
             PeternakanHitung(isMusicPlaying: $isMusicPlaying, displayMode: $displayMode) // View dari file ModeKetigaView.swift
         case .HewanMasuk:
             HewanMasuk(isMusicPlaying: $isMusicPlaying, displayMode: $displayMode) // View dari file ModeKeempatView.swift
+        case .puzzle:
+            PuzzlePage(isMusicPlaying: $isMusicPlaying, displayMode: $displayMode)
         case .home:
             ZStack {
                 Image("bgstart")
@@ -47,7 +49,7 @@ struct ContentView: View {
                 
                 Button {
 //                    isBUAHActive = true
-                    displayMode = .kelinci
+                    displayMode = .puzzle
                 } label: {
                     Image("buttonplay")
                 }
@@ -79,6 +81,7 @@ enum DisplayMode {
     case PeternakanHitung
     case HewanMasuk
     case kelinci
+    case puzzle
 }
 #Preview {
     ContentView()
